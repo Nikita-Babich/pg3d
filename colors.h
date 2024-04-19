@@ -1,4 +1,10 @@
+
+
+#ifndef _COLORS_INCLUDED_
+#define _COLORS_INCLUDED_
+
 //Colors
+
 COLORREF BLACK = RGB(0, 0, 0); 
 COLORREF WHITE = RGB(255, 255, 255); 
 COLORREF RED = RGB(0, 0, 255);
@@ -9,3 +15,5 @@ COLORREF main_color = BLACK;
 COLORREF background_color = WHITE;
 
 COLORREF rc(){ return RGB(rand()%255, rand()%255, rand()%255); };
+
+#endif // COLORS_INCLUDED

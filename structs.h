@@ -1,17 +1,30 @@
+
+
+#ifndef _STRUCTS_INCLUDED_
+#define _STRUCTS_INCLUDED_
+
 // All the structs, their converters and basic math.
 
+// Check if <vector.h> // Did not find VECTOR_H to test it
+//#ifndef VECTOR_H
+//#include <vector.h>
+//#endif
 
-typedef struct {
+#ifndef _MATH_H_
+#include <math.h>
+#endif
+
+typedef struct {	// 2d
     int x;          // X-coordinate
     int y;          // Y-coordinate
     COLORREF color; // Color information
 } Pixel;
 
-
-typedef struct {
+typedef struct {	// used for vectors and points in 3d and 2d
     float x;          // X-coordinate
     float y;          // Y-coordinate
-    //COLORREF color; // Color information
+    float z;
+    COLORREF color; // Color information
 } Point;
 
 typedef struct {
@@ -59,3 +72,5 @@ Contour rcont(int size){
 	}
 	return result;
 }
+
+#endif // STRUCTS_INCLUDED

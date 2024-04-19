@@ -2,6 +2,10 @@
 #define UNICODE
 #endif 
 
+
+//------------------
+//Explicit libraries
+
 //API
 #include <windows.h>
 #include <commdlg.h>
@@ -19,24 +23,25 @@
 #include <vector>
 #include <algorithm>
 #include <cfloat>
+//End of Explicit libraries
+//------------------------
 
 
-
-
+//Project settings
 #define WINDOW_HEIGHT 800
 #define WINDOW_WIDTH 800
 #define DRAW_HEIGHT 800
 #define DRAW_WIDTH 800
 
 
-
+//---------------
 //My headers
 #include "colors.h" //independent
-#include "screen_buffer.h" //after colors
-#include "structs.h" //geometry core
+#include "screen_buffer.h" //include after windows and colors
+#include "structs.h" //geometry core, include after vector and math
 
-
-
+//End of my headers
+//---------------
 
 
 

@@ -1,4 +1,17 @@
-//buffer
+//buffer to draw to the screen full picture at once
+
+#ifndef _BUFFER_INCLUDED_
+#define _BUFFER_INCLUDED_
+
+// Check if <windows.h> and colors.h is already included
+#ifndef _WINDOWS_
+#include <windows.h>
+#endif
+
+#ifndef _COLORS_INCLUDED_
+#include "colors.h" 
+#endif
+
 
 #define UPDATE {\
 			PAINTSTRUCT ps;\
@@ -53,3 +66,6 @@ void UpdateScreen(HDC hdc) {
         SetDIBitsToDevice(hdc,  0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, 0, 0, 0, WINDOW_HEIGHT, buffer, &bmi, DIB_RGB_COLORS); //DIB_PAL_COLORS
     }
 }
+
+#endif // BUFFER_INCLUDED
+
