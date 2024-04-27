@@ -123,12 +123,7 @@ int WINAPI WinMain(
 	
 	ShowWindow(hwnd, nCmdShow);
 	srand(time(NULL));
-	main_contour = rcont(6);
-	//main_color = (COLORREF){255,0,0};
-	
-	//PAINTSTRUCT ps;
-    //HDC hdc;
-	//UPDATE;
+	//main_contour = rcont(6);
 	
 	UpdateWindow(hwnd);
 	printf("\nWindow is running");

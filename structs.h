@@ -47,6 +47,10 @@ Segment orthoSegment(Segment A){ //only 2d, originally for testing
 	A.finish.y = A.start.y + newd.y;
 	return A;
 }
+Point normalise(Point A){
+	
+	
+}
 
 // Converters
 Pixel convertPointToPixel(Point p) { return (Pixel){(int)p.x, (int)p.y}; }
