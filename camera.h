@@ -23,9 +23,35 @@ typedef struct {	//
 
 Camera camera;
 camera.pos = {0,0,0};
-camera.beta=0;
-camera.alpha=0;
+camera.beta = 0;
+camera.alpha = 0;
 
+void move(Direction dir){
+	calc_orient();
+	switch (dir) {
+    case LEFT:
+        // Handle LEFT direction
+        break;
+    case RIGHT:
+        // Handle RIGHT direction
+        break;
+    case UP:
+        // Handle UP direction
+        break;
+    case DOWN:
+        // Handle DOWN direction
+        break;
+    case FORWARD:
+        // Handle FORWARD direction
+        break;
+    case DBACKWARD:
+        // Handle BACKWARD direction
+        break;
+    default:
+        // Handle invalid direction (optional)
+        break;
+	}
+}
 
 
 #endif // CAMERA_INCLUDED

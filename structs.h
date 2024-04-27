@@ -14,6 +14,16 @@
 #include <math.h>
 #endif
 
+enum Direction {
+	LEFT = 0,
+	RIGHT = 1,
+	UP = 2,
+	DOWN = 3,
+	FORWARD = 4,
+	BACKWARD = 5
+};
+
+
 typedef struct {	// 2d
     int x;          // X-coordinate
     int y;          // Y-coordinate
