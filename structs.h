@@ -40,6 +40,10 @@ typedef std::vector<Contour> Objects;
 //math
 float scalarProduct(Point A, Point B){ return A.x*B.x + A.y*B.y + A.z*B.z; }
 Point dif(Point A, Point B){ return (Point){B.x-A.x, B.y-A.y, B.z-A.z}; }
+float len(Point A){ return sqrt(scalarProduct(A,A));}
+Point normalise(Point A){ float L = len(A); return (Point){A.x/L, A.y/L, A.z/L};}
+
+//from 2d
 Point orthoVector(Point A, Point B){Point d = dif(A,B); return (Point){-d.y,d.x};} //only 2d
 Segment orthoSegment(Segment A){ //only 2d, originally for testing
 	Point newd = orthoVector(A.start, A.finish);
@@ -47,10 +51,7 @@ Segment orthoSegment(Segment A){ //only 2d, originally for testing
 	A.finish.y = A.start.y + newd.y;
 	return A;
 }
-Point normalise(Point A){
-	
-	
-}
+
 
 // Converters
 Pixel convertPointToPixel(Point p) { return (Pixel){(int)p.x, (int)p.y}; }
@@ -59,6 +60,8 @@ Point convertPixelToPoint(Pixel px) { return (Point){(float)px.x, (float)px.y}; 
 //random creation
 Pixel rpi(){  return (Pixel){rand() % DRAW_WIDTH, rand() % DRAW_HEIGHT}; } //random Pixel 
 Point rpo(){ return (Point){(float)(rand() % DRAW_WIDTH), (float)(rand() % DRAW_HEIGHT)}; } //random Point
+Point rpo3(){ return (Point){(float)(rand() % 10), (float)(rand() % 10), (float)(rand() % 10)}; } //random Point
+
 Segment rs(){ return (Segment){ convertPixelToPoint(rpi()), convertPixelToPoint(rpi()) }; }; // random segment
 Segments rss(int size = 10){
 	Segments result;
