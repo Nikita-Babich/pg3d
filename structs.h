@@ -48,6 +48,14 @@ typedef std::vector<Point> Contour;
 typedef std::vector<Contour> Objects;
 
 //math
+Point operator+(const Point& p1, const Point& p2) {
+    Point result;
+    result.x = p1.x + p2.x;
+    result.y = p1.y + p2.y;
+    result.z = p1.z + p2.z;
+    //result.color = p1.color;
+    return result;
+}
 float scalarProduct(Point A, Point B){ return A.x*B.x + A.y*B.y + A.z*B.z; }
 Point dif(Point A, Point B){ return (Point){B.x-A.x, B.y-A.y, B.z-A.z}; }
 float len(Point A){ return sqrt(scalarProduct(A,A));}
