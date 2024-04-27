@@ -38,10 +38,10 @@ typedef std::vector<Point> Contour;
 typedef std::vector<Contour> Objects;
 
 //math
-float scalarProduct(Point A, Point B){ return A.x*B.x+A.y*B.y; }
-Point dif(Point A, Point B){ return (Point){B.x-A.x,B.y-A.y}; }
-Point orthoVector(Point A, Point B){Point d = dif(A,B); return (Point){-d.y,d.x};}
-Segment orthoSegment(Segment A){
+float scalarProduct(Point A, Point B){ return A.x*B.x + A.y*B.y + A.z*B.z; }
+Point dif(Point A, Point B){ return (Point){B.x-A.x, B.y-A.y, B.z-A.z}; }
+Point orthoVector(Point A, Point B){Point d = dif(A,B); return (Point){-d.y,d.x};} //only 2d
+Segment orthoSegment(Segment A){ //only 2d, originally for testing
 	Point newd = orthoVector(A.start, A.finish);
 	A.finish.x = A.start.x + newd.x;
 	A.finish.y = A.start.y + newd.y;

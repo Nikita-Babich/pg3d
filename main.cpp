@@ -39,6 +39,7 @@
 #include "colors.h" //independent
 #include "screen_buffer.h" //include after windows and colors
 #include "structs.h" //geometry core, include after vector and math
+#include "camera.h" //include after structs
 
 //End of my headers
 //---------------
