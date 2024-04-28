@@ -79,9 +79,12 @@ Point operator*(float num, const Point& p2) {
     result.color = p2.color;
     return result;
 }
-float operator*(const Point& A, const Point& B) {
+float operator*(const Point& A, const Point& B) { //scalar multiplication
     float result = A.x*B.x + A.y*B.y + A.z*B.z
     return result;
+}
+float operator^(const Point& A, const Point& B) { //angle between vectors
+	return (A*B) / (len(A) * len(B));
 }
 float scalarProduct(Point A, Point B){ return A.x*B.x + A.y*B.y + A.z*B.z; }
 Point dif(Point A, Point B){ return (Point){B.x-A.x, B.y-A.y, B.z-A.z}; }
