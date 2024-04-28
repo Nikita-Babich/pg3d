@@ -23,10 +23,60 @@ typedef struct {	//
 
 Camera camera;
 camera.pos = {0,0,0};
-camera.beta = 0;
-camera.alpha = 0;
+camera.beta = 0; // grows towards left
+camera.alpha = 0; // grows towards up
 
+Point x_const = {1,0,0};
+Point y_const = {0,1,0};
 Point up_const = {0,0,1};
+
+Point rotateAroundAxis(Point p, Point axis, float angle) {
+    // Normalize the axis vector
+    axis = normalise(axis);
+    float ux, uy, uz;
+    ux = axis.x;
+    uy = axis.y;
+    uz = axis.z;
+
+    // Calculate cosine and sine of the angle
+    float cosTheta = cos(angle);
+    float sinTheta = sin(angle);
+    // Calculate one minus cosine
+    float oneMinusCosTheta = 1.0f - cosTheta;
+
+    // Calculate the rotation matrix components
+    float r00 = cosTheta + ux * ux * oneMinusCosTheta;
+    float r01 = ux * uy * oneMinusCosTheta - uz * sinTheta;
+    float r02 = ux * uz * oneMinusCosTheta + uy * sinTheta;
+
+    float r10 = uy * ux * oneMinusCosTheta + uz * sinTheta;
+    float r11 = cosTheta + uy * uy * oneMinusCosTheta;
+    float r12 = uy * uz * oneMinusCosTheta - ux * sinTheta;
+
+    float r20 = uz * ux * oneMinusCosTheta - uy * sinTheta;
+    float r21 = uz * uy * oneMinusCosTheta + ux * sinTheta;
+    float r22 = cosTheta + uz * uz * oneMinusCosTheta;
+	
+    float newX = r00 * p.x + r01 * p.y + r02 * p.z;
+    float newY = r10 * p.x + r11 * p.y + r12 * p.z;
+    float newZ = r20 * p.x + r21 * p.y + r22 * p.z;
+
+    // return
+    Point result
+    result.x = newX;
+    result.y = newY;
+    result.z = newZ;
+    return result;
+}
+void calc_orient(){ //use alpha beta to calculte orientation vectors, matices
+	// horisontal rotation
+	camera.forw = rotateAroundAxis(y_const, up_const, camera.beta);
+	camera.rigth = rotateAroundAxis(x_const, up_const, camera.beta);
+	
+	//vertical
+	camera.forw = rotateAroundAxis(camera.forw, camera.rigth, camera.alpha);
+	camera.up = rotateAroundAxis(up_const, camera.rigth, camera.alpha);
+}
 
 void move(Direction dir){
 	calc_orient();
