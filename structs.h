@@ -3,7 +3,7 @@
 #ifndef _STRUCTS_INCLUDED_
 #define _STRUCTS_INCLUDED_
 
-// All the structs, their converters and basic math.
+// All the structs, their converters, basic math and operator overloads
 
 // Check if <vector.h> // Did not find VECTOR_H to test it
 //#ifndef VECTOR_H
@@ -86,6 +86,12 @@ float operator*(const Point& A, const Point& B) { //scalar multiplication
 float operator^(const Point& A, const Point& B) { //angle between vectors
 	return (A*B) / (len(A) * len(B));
 }
+Point& operator+=(Point& lhs, const Point& rhs) {
+	lhs.x += rhs.x;
+	lhs.y += rhs.y;
+	lhs.z += rhs.z;
+}
+
 float scalarProduct(Point A, Point B){ return A.x*B.x + A.y*B.y + A.z*B.z; }
 Point dif(Point A, Point B){ return (Point){B.x-A.x, B.y-A.y, B.z-A.z}; }
 float len(Point A){ return sqrt(scalarProduct(A,A));}

@@ -26,29 +26,32 @@ camera.pos = {0,0,0};
 camera.beta = 0;
 camera.alpha = 0;
 
+Point up_const = {0,0,1};
+
 void move(Direction dir){
 	calc_orient();
+	float ms = 0.3; //ms = movement speed
 	switch (dir) {
     case LEFT:
-        // Handle LEFT direction
+        camera.pos += ms * (- camera.right);
         break;
     case RIGHT:
-        // Handle RIGHT direction
+        camera.pos += ms * ( camera.right);
         break;
     case UP:
-        // Handle UP direction
+        camera.pos += ms * ( up_const );
         break;
     case DOWN:
-        // Handle DOWN direction
+        camera.pos += ms * ( -up_const );
         break;
     case FORWARD:
-        // Handle FORWARD direction
+        camera.pos += ms * ( camera.forw);
         break;
-    case DBACKWARD:
-        // Handle BACKWARD direction
+    case BACKWARD:
+        camera.pos += ms * (- camera.forw);
         break;
     default:
-        // Handle invalid direction (optional)
+        
         break;
 	}
 }
