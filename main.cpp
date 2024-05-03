@@ -159,11 +159,6 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
     case WM_PAINT:
         {
-        	InitializeBuffer();
-        	
-			//drawContour( main_contour, BLUE); 
-			//##
-			resetZBuffer();
 			drawScene();
 			UPDATE;
         }
@@ -174,12 +169,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
             mouseY = HIWORD(lParam);
             printf("\n Left mouse click \t %d %d ",mouseX,mouseY);
             
-            Point new_point;
-            new_point.x = mouseX;
-            new_point.y = mouseY;
-            main_contour.push_back(new_point);
-            
-			InvalidateRect(hwnd, NULL, FALSE);
+			//InvalidateRect(hwnd, NULL, FALSE);
             break;
             
     case WM_MOUSEMOVE: 
@@ -189,8 +179,8 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
     		break;
             
     case WM_RBUTTONDOWN:
-    		main_contour.clear();
-			InvalidateRect(hwnd, NULL, FALSE);
+    		//main_contour.clear();
+			//InvalidateRect(hwnd, NULL, FALSE);
             break;
             
     case WM_KEYDOWN:

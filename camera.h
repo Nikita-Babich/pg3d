@@ -105,6 +105,44 @@ void move(Direction dir){
         break;
 	}
 }
+void turn(Direction dir){
+	float rs = 0.03;
+	switch (dir) {
+    case LEFT:
+        camera.beta += rs;
+        break;
+    case RIGHT:
+        camera.beta -= rs;
+        break;
+    case UP:
+        camera.alpha += rs;
+        break;
+    case DOWN:
+        camera.alpha -= rs;
+        break;
+    case FORWARD:
+        
+        break;
+    case BACKWARD:
+        
+        break;
+    default:
+        
+        break;
+	}
+	if(camera.alpha > M_PI/2 ) {
+		camera.alpha = M_PI/2;
+	}
+	if(camera.alpha < -M_PI/2 ) {
+		camera.alpha = -M_PI/2;
+	}
+	if(camera.beta > M_PI*2 ) {
+		camera.beta -= M_PI*2;
+	}
+	if(camera.beta < 0 ) {
+		camera.beta += M_PI*2;
+	}
+}
 
 Pixel project_point(const Point& P){
 	//depending on the current mode find coordinates on the drawing plane
@@ -112,6 +150,11 @@ Pixel project_point(const Point& P){
 
 void drawScene(){
 	//for each triangle call painter
+	InitializeBuffer(); //clean color buffer
+	resetZBuffer(); // clear depth buffer
+	for (const int& face : scene) {
+        drawFace(face);
+    }
 }
 
 #endif // CAMERA_INCLUDED

@@ -1,14 +1,14 @@
 Camera position
--3 0 0
+0 -3 0
 Light position
--3 -3 3
+3 -3 3
 Light color
 255 255 255
-Object color
+Object color ---
 250 0 0
-Object diffusion
+Object diffusion 
 150 150 150
-Object mirror
+Object mirror 
 150 150 150
 Object ambient
 150 150 150
