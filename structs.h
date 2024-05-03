@@ -57,6 +57,8 @@ typedef std::vector<Face> Scene;
 
 //global object;
 Scene scene;
+bool Pmode = false; //plane vs spherical projection
+bool Dmode = false; //wireframe vs coloring
 
 //math
 Point operator+(const Point& p1, const Point& p2) {

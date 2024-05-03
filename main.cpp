@@ -208,31 +208,36 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 				
 			case 'C':
 				//random_main_color();
-				OpenColorPicker(hwnd,0);
+				//OpenColorPicker(hwnd,0);
 				break;
 			case 'V':
 				//random_main_color();
-				OpenColorPicker(hwnd,1);
+				//OpenColorPicker(hwnd,1);
 				break;
 				
-			case 'Q': rotateMainContour(LEFT);  break;
-			case 'E': rotateMainContour(RIGHT);  break;
+			case 'Q': turn(LEFT);  break;
+			case 'E': turn(RIGHT);  break;
+			case 'R': turn(UP);  break;
+			case 'F': turn(DOWN);  break;
 			
-			case 'W': scaleMainContour(UP);  break;
-			case 'S': scaleMainContour(DOWN);  break;
-			case 'D': scaleMainContour(RIGHT);  break;
-			case 'A': scaleMainContour(LEFT);  break;
+			case 'W': move(FORWARD);  break;
+			case 'S': move(BACKWARD);  break;
+			case 'D': move(RIGHT);  break;
+			case 'A': move(LEFT);  break;
 			
-			case 'T': shearMainContour(UP);  break;
-			case 'G': shearMainContour(DOWN);  break;
-			case 'H': shearMainContour(RIGHT);  break;
-			case 'F': shearMainContour(LEFT);  break;
+			case 'Z': Pmode = !Pmode;  break;
+			case 'X': Dmode = !Dmode;  break;
 			
-			case 'B': triangle_method = (triangle_method+1)%2;  break;
-			case 'R': main_contour = rcont(10);  break;
-			case 'X': symmetryMainContour();  break;
-			case 'Z': selectedMethod = static_cast<LineMethod>((selectedMethod + 1)%3); printf("\nmethod %d", selectedMethod); break;
-			case 'M': PROGRAM_MODE = static_cast<progState>((PROGRAM_MODE + 1)%6); break;
+			//case 'T': shearMainContour(UP);  break;
+			//case 'G': shearMainContour(DOWN);  break;
+			//case 'H': shearMainContour(RIGHT);  break;
+			//case 'F': shearMainContour(LEFT);  break;
+			
+			//case 'B': triangle_method = (triangle_method+1)%2;  break;
+			//case 'R': main_contour = rcont(10);  break;
+			//case 'X': symmetryMainContour();  break;
+			//case 'Z': selectedMethod = static_cast<LineMethod>((selectedMethod + 1)%3); printf("\nmethod %d", selectedMethod); break;
+			//case 'M': PROGRAM_MODE = static_cast<progState>((PROGRAM_MODE + 1)%6); break;
 			default: 
 				// Process other non-character keystrokes. 
 				break; 

@@ -153,6 +153,12 @@ Pixel project_point(const Point& P){
 	float phi_hor = relative^camera.right;
 	float phi_vert = relative^camera.up;
 	
+	float rfov = M_PI/fov; //how much 180 angle is bigger than field of view, needed for transformation
+	float r2fov = rfov*DRAW_WIDTH; //ratio in pixels
+	 //##
+	
+	int x = M_PI - static_cast<int>(phi_hor);
+	
 }
 
 void drawScene(){
