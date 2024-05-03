@@ -81,6 +81,71 @@ void dda2( Pixel start, Pixel end, COLORREF color) {
 		i++;
 	}
 };
+
+//triangle section
+void fill_sliced_triangle(Contour C, Contour orig){
+	Segment e1, e2; float we1, we2;
+	float y = e1.start.y; float ymax = e1.finish.y;
+	float x1 = e1.start.x; float x2 = e2.start.x;
+	if(C[0].y == C[1].y){
+		e1 = (Segment){ C[0], C[2] };
+		e2 = (Segment){ C[1], C[2] };
+		we1 = (C[2].x - C[0].x) / (C[2].y - C[0].y);
+		we2 = (C[2].x - C[1].x) / (C[2].y - C[1].y);
+		y = e1.start.y;
+		ymax = e1.finish.y;
+		x1 = e1.start.x;
+		x2 = e2.start.x;
+	} else {
+		e1 = (Segment){ C[0], C[1] };
+		e2 = (Segment){ C[0], C[2] };
+		we1 = (C[1].x - C[0].x) / (C[1].y - C[0].y);
+		we2 = (C[2].x - C[0].x) / (C[2].y - C[0].y);
+		y = e2.start.y;
+		ymax = e2.finish.y;
+		x1 = e1.start.x;
+		x2 = e2.start.x;
+	};
+	while(y < ymax){
+		for(float i = std::min(x1, x2); i <= std::max(x1, x2); i=i+1){
+			DrawPixel(static_cast<int>(i),static_cast<int>(y), colorchooser(i,y,orig));
+		}
+		x1 += we1;
+		x2 += we2;
+		y+=1;
+	}
+}
+void fill_triangle(Contour C, Contour orig){
+	std::sort(C.begin(), C.end(), [](const Point& a, const Point& b) {
+        if (a.y == b.y) return a.x < b.x;
+        return a.y < b.y;
+    });
+    if(C[0].y == C[1].y || C[1].y == C[2].y) {
+    	fill_sliced_triangle(C, orig);
+	} else { // slicing
+		float m = (C[2].y - C[0].y)/(C[2].x - C[0].x);
+		Point P = (Point){
+			(C[1].y-C[0].y)/m + C[0].x,
+			C[1].y
+		};
+		Contour upper;
+		Contour lower;
+		if(C[1].x < P.x){
+			upper.push_back(C[0]); upper.push_back(C[1]); upper.push_back(P);
+			lower.push_back(C[1]); lower.push_back(P); lower.push_back(C[2]);
+			fill_sliced_triangle(upper, orig);
+			fill_sliced_triangle(lower, orig);
+		} else {
+			upper.push_back(C[0]); upper.push_back(P); upper.push_back(C[1]);
+			lower.push_back(P); lower.push_back(C[1]); lower.push_back(C[2]);
+			fill_sliced_triangle(upper, orig);
+			fill_sliced_triangle(lower, orig);
+		}
+	}
+};
+
+
+
 // Function to transfer buffer to screen
 void UpdateScreen(HDC hdc) {
     if (buffer != NULL) {

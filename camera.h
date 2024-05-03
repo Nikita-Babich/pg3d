@@ -106,6 +106,10 @@ void move(Direction dir){
 	}
 }
 
+Pixel project_point(const Point& P){
+	//depending on the current mode find coordinates on the drawing plane
+}
+
 void drawScene(){
 	//for each triangle call painter
 }
