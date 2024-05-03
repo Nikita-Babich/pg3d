@@ -37,6 +37,13 @@ typedef struct {	// used for vectors and points in 3d and 2d
     COLORREF color; // Color information
 } Point;
 
+typedef struct {	// used for triangles in 3d
+    Point A;          // X-coordinate
+    Point B;         // Y-coordinate
+    Point C;
+     // Color information
+} Face;
+
 typedef struct {
     Point start;          //
     Point finish;          //
@@ -46,6 +53,10 @@ typedef struct {
 typedef std::vector<Segment> Segments;
 typedef std::vector<Point> Contour;
 typedef std::vector<Contour> Objects;
+typedef std::vector<Face> Scene;
+
+//global object;
+Scene scene;
 
 //math
 Point operator+(const Point& p1, const Point& p2) {

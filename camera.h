@@ -107,7 +107,7 @@ void move(Direction dir){
 }
 
 void drawScene(){
-	
+	//for each triangle call painter
 }
 
 #endif // CAMERA_INCLUDED

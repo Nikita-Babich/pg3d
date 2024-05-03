@@ -163,7 +163,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
         	
 			//drawContour( main_contour, BLUE); 
 			//##
-			resetZBuffer()
+			resetZBuffer();
 			drawScene();
 			UPDATE;
         }
