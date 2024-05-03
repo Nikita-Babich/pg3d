@@ -57,8 +57,30 @@ void DrawPixel(int x, int y, COLORREF color) {
     }
 }
 void DrawPoint(Point A, COLORREF color){
-	DrawPixel(static_cast<float>(A.x),static_cast<float>(A.y),color);
+	DrawPixel(static_cast<int>(A.x),static_cast<int>(A.y),color); //was float
 }
+void dda2( Pixel start, Pixel end, COLORREF color) {
+	int x1 = start.x; int y1 = start.y;
+	int x2 = end.x; int y2 = end.y;
+	int DX = x2 - x1;
+	int DY = y2 - y1;
+	float dx, dy;
+	int steps; //equals longest dimension
+	if (abs(DX) >= abs(DY)) steps = abs(DX);
+		else steps = abs(DY);
+	dx = DX / (float)steps;
+	dy = DY / (float)steps;
+	float x = x1;
+	float y = y1;
+	int i = 0;
+	while (i <= steps) {
+		//SetPixel(hdc, static_cast<int>(x), static_cast<int>(y), color);
+		DrawPixel(static_cast<int>(x), static_cast<int>(y), color);
+		x = x + dx;
+		y = y + dy;
+		i++;
+	}
+};
 // Function to transfer buffer to screen
 void UpdateScreen(HDC hdc) {
     if (buffer != NULL) {

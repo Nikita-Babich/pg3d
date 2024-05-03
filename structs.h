@@ -134,4 +134,6 @@ Contour rcont(int size){
 	return result;
 }
 
+//reader section
+
 #endif // STRUCTS_INCLUDED

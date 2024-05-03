@@ -106,5 +106,8 @@ void move(Direction dir){
 	}
 }
 
+void drawScene(){
+	
+}
 
 #endif // CAMERA_INCLUDED

@@ -23,6 +23,7 @@
 #include <vector>
 #include <algorithm>
 #include <cfloat>
+#include <limits>
 //End of Explicit libraries
 //------------------------
 
@@ -39,7 +40,9 @@
 #include "colors.h" //independent
 #include "screen_buffer.h" //include after windows and colors
 #include "structs.h" //geometry core, include after vector and math
+#include "zbuffer.h" // after sizes define, before camera
 #include "camera.h" //include after structs
+
 
 //End of my headers
 //---------------
@@ -158,8 +161,10 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
         {
         	InitializeBuffer();
         	
-			drawContour( main_contour, BLUE); 
-			
+			//drawContour( main_contour, BLUE); 
+			//##
+			resetZBuffer()
+			drawScene();
 			UPDATE;
         }
         return 0;
