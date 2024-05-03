@@ -26,6 +26,8 @@ camera.pos = {0,0,0};
 camera.beta = 0; // grows towards left
 camera.alpha = 0; // grows towards up
 
+float fov = M_PI/2;
+
 Point x_const = {1,0,0};
 Point y_const = {0,1,0};
 Point up_const = {0,0,1};
@@ -146,6 +148,11 @@ void turn(Direction dir){
 
 Pixel project_point(const Point& P){
 	//depending on the current mode find coordinates on the drawing plane
+	Pixel result;
+	Point relative = P - camera.pos;
+	float phi_hor = relative^camera.right;
+	float phi_vert = relative^camera.up;
+	
 }
 
 void drawScene(){

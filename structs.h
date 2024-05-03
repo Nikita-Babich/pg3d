@@ -95,7 +95,7 @@ float operator*(const Point& A, const Point& B) { //scalar multiplication
     return result;
 }
 float operator^(const Point& A, const Point& B) { //angle between vectors
-	return (A*B) / (len(A) * len(B));
+	return asin( (A*B) / (len(A) * len(B)) );
 }
 Point& operator+=(Point& lhs, const Point& rhs) {
 	lhs.x += rhs.x;
