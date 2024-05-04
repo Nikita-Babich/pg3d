@@ -10,6 +10,7 @@
 
 //there is only one camera at any instance, so instead of functions procedures are used here
 // Camera should change in place to be the global object
+float FOV = 90;
 typedef struct {	// 
     Point pos;          //position
     float beta; 		//horisontal angle
@@ -19,6 +20,9 @@ typedef struct {	//
     Point forw;   //from y
     Point right; //from x
     Point up; //from z
+    
+    //float w=FOV;//angles of the FOV
+    //float h=FOV;
 } Camera;
 
 Camera camera;
@@ -153,11 +157,21 @@ Pixel project_point(const Point& P){
 	float phi_hor = relative^camera.right;
 	float phi_vert = relative^camera.up;
 	
-	float rfov = M_PI/fov; //how much 180 angle is bigger than field of view, needed for transformation
-	float r2fov = rfov*DRAW_WIDTH; //ratio in pixels
+	//float coord1 = - phi_hor * (180/M_PI) * (DRAW_WIDTH / FOV) + DRAW_WIDTH/2;
+	//float coord2 = - phi_vert * (180/M_PI) * (DRAW_WIDTH / FOV) + DRAW_WIDTH/2;
+	float alpha = (180-FOV)/2;
+	float coord1 = (M_PI - phi_hor) * (180/M_PI) - alpha;
+	float coord2 = (phi_vert) * (180/M_PI) - alpha;
+	
+	int c1 = static_cast<int>(coord1);
+	int c2 = static_cast<int>(coord2);
 	 //##
 	
-	int x = M_PI - static_cast<int>(phi_hor);
+	result.x = c1;
+	result.y = c2;
+	result.color = P.color;
+	
+	return result;
 	
 }
 
