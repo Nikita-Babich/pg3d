@@ -29,6 +29,8 @@
 //End of Explicit libraries
 //------------------------
 
+int debug = 1;
+
 
 //Project settings
 #define WINDOW_HEIGHT 800
@@ -124,6 +126,14 @@ int WINAPI WinMain(
 	// nCmdShow: the fourth parameter from WinMain
 	
 	// Segment for setup
+	
+	//first read here
+	read_config();
+	
+	
+	readVtkFile(filepath1, allpoints, scene);
+	
+	
 	InitializeBitmapInfo(&bmi);
 	InitializeBuffer();
 	
@@ -205,15 +215,12 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			case VK_DELETE: 
 				// Process the DEL key. 
 				break; 
+			case VK_ESCAPE: 
+				read_config();
+				break; 
 			case VK_F2: 
 				// Process the F2 key. 
 				break; 
-				
-			
-			case 'V':
-				//random_main_color();
-				//OpenColorPicker(hwnd,1);
-				break;
 				
 			case 'Q': turn(LEFT);  break;
 			case 'E': turn(RIGHT);  break;
@@ -230,6 +237,16 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			case 'C':
 				break;
 			case 'V': triangle_method = !triangle_method;
+				break;
+				
+			case '1':
+				readVtkFile(filepath1, allpoints, scene);
+				break;
+			case '2':
+				readVtkFile(filepath2, allpoints, scene);
+				break;
+			case '3':
+				readVtkFile(filepath3, allpoints, scene);
 				break;
 			
 			//case 'T': shearMainContour(UP);  break;

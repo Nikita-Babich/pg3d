@@ -27,9 +27,7 @@ struct Camera_ {	//
 typedef struct Camera_ Camera;
 
 Camera camera;
-camera.pos = {0,0,0};
-camera.beta = 0; // grows towards left
-camera.alpha = 0; // grows towards up
+
 
 float fov = M_PI/2;
 float scaling = 100;

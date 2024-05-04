@@ -10,6 +10,10 @@ void read_config(){
         return;
     }
     
+    camera.pos = {0,0,0};
+	camera.beta = 0; // grows towards left
+	camera.alpha = 0; // grows towards up
+
     std::string line;
     int lineCount = 0;
     int colorr,colorg,colorb;
@@ -27,7 +31,7 @@ void read_config(){
                     ss >> camera.pos.x >> camera.pos.y >> camera.pos.z;
                     break;
                 case 7:
-                    ss >> light.x >> light.y >> light.z;
+                    ss >> light.pos.x >> light.pos.y >> light.pos.z;
                     break;
                 case 9:
                 	
@@ -54,10 +58,13 @@ void read_config(){
             }
         }
     }
-        
+    printf("Config read");   
 }
 
-std::string filepath = "files/cube.vtk";
+std::string filepath1 = "files/cube.vtk";
+std::string filepath2 = "files/sphere_octo1.vtk";
+std::string filepath3 = "files/sphere_octo3.vtk";
+
 void readVtkFile(const std::string& filepath, Allpoints& allpoints, Scene& scene) {
 	allpoints.clear();
 	scene.clear();
@@ -94,7 +101,10 @@ void readVtkFile(const std::string& filepath, Allpoints& allpoints, Scene& scene
                 if (std::getline(file, line)) {
                     std::stringstream pointStream(line);
                     Point p;
-                    pointStream >> p.pos.x >> p.pos.y >> p.pos.z;
+                    if (!(pointStream >> p.pos.x >> p.pos.y >> p.pos.z)) {
+                    	std::cerr << "Error reading point coordinates on line " << (i + 1) << std::endl;
+                    	return;
+                	}
                     p.color = main_color; // object color
                     allpoints.push_back(p);
                     pointRefs.push_back(&allpoints.back()); // Store reference to point, might not be needed
@@ -103,6 +113,7 @@ void readVtkFile(const std::string& filepath, Allpoints& allpoints, Scene& scene
         } else if (keyword == "POLYGONS") {
             processingPoints = false;
             processingFaces = true;
+            printf("Starting to read polygons\n");
             int numPolygons;
             int numVertices;
             ss >> numPolygons >> numVertices; // Number of polygons and total vertices (ignored)
@@ -118,27 +129,33 @@ void readVtkFile(const std::string& filepath, Allpoints& allpoints, Scene& scene
                         Face face;
                         int indexA, indexB, indexC;
                         faceStream >> indexA >> indexB >> indexC;
-
+						if(debug)printf("%d %d %d", indexA, indexB, indexC);
                         // Set pointers to points from allpoints
                         face.A = pointRefs[indexA];
                         face.B = pointRefs[indexB];
                         face.C = pointRefs[indexC];
-
+                        
+						if(debug)printf("Face pointers set\n");
+						
                         // Add face to scene
                         scene.push_back(face);
+                        if(debug)printf("Face added to scene\n");
 
                         // Update point facePtrs vectors, now points have pointers to face
                         face.A->facePtrs.push_back(&scene.back());
                         face.B->facePtrs.push_back(&scene.back());
                         face.C->facePtrs.push_back(&scene.back());
-                    }
+                        if(debug)printf("Points got their pointers\n");
+                    } else {
+                    	printf("Line did not declare 3 vertices\n");
+					}
                 }
             }
         }
     }
 
     file.close();
-    
+    printf("Vtk read");
 }
 
 
