@@ -34,17 +34,17 @@ camera.alpha = 0; // grows towards up
 float fov = M_PI/2;
 float scaling = 100;
 
-Point x_const = {1,0,0};
-Point y_const = {0,1,0};
-Point up_const = {0,0,1};
+V3 x_const = {1,0,0};
+V3 y_const = {0,1,0};
+V3 up_const = {0,0,1};
 
-Point rotateAroundAxis(Point p, Point axis, float angle) {
+V3 rotateAroundAxis(V3 p, V3 axis, float angle) {
     // Normalize the axis vector
-    axis.pos = normalise(axis.pos);
+    axis = normalise(axis);
     float ux, uy, uz;
-    ux = axis.pos.x;
-    uy = axis.pos.y;
-    uz = axis.pos.z;
+    ux = axis.x;
+    uy = axis.y;
+    uz = axis.z;
 
     // Calculate cosine and sine of the angle
     float cosTheta = cos(angle);
@@ -70,7 +70,7 @@ Point rotateAroundAxis(Point p, Point axis, float angle) {
     float newZ = r20 * p.x + r21 * p.y + r22 * p.z;
 
     // return
-    Point result
+    V3 result;
     result.x = newX;
     result.y = newY;
     result.z = newZ;
@@ -155,7 +155,7 @@ void turn(Direction dir){
 Pixel project_point(const Point& P){
 	//depending on the current mode find coordinates on the drawing plane
 	Pixel result;
-	Point relative = P - camera.pos;
+	V3 relative = P.pos - camera.pos;
 	
 	float coord1, coord2;
 	
@@ -180,7 +180,7 @@ Pixel project_point(const Point& P){
 	int c2 = static_cast<int>(coord2);
 	result.x = c1;
 	result.y = c2;
-	result.color = P.color;
+	//result.color = P.color; //##
 	return result;
 }
 void drawLine( Point start_float, Point end_float, COLORREF color){
@@ -201,7 +201,7 @@ void drawSegments(  Segments f, COLORREF color){
 
 
 void drawFace(Face face){
-	Contour cont1 = FaceToContour(Face face);
+	Contour cont1 = FaceToContour(face);
 	Segments f = convertContourToSegments(cont1 );
 	drawSegments(  f, main_color);
 	

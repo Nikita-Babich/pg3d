@@ -6,7 +6,7 @@
 void read_config(){
 	std::ifstream configFile("config.txt");
     if (!configFile) {
-        std::cerr << "Error: Unable to open config.txt" << endl;
+        std::cerr << "Error: Unable to open config.txt" << std::endl;
         return;
     }
     
@@ -94,7 +94,7 @@ void readVtkFile(const std::string& filepath, Allpoints& allpoints, Scene& scene
                 if (std::getline(file, line)) {
                     std::stringstream pointStream(line);
                     Point p;
-                    pointStream >> p.x >> p.y >> p.z;
+                    pointStream >> p.pos.x >> p.pos.y >> p.pos.z;
                     p.color = main_color; // object color
                     allpoints.push_back(p);
                     pointRefs.push_back(&allpoints.back()); // Store reference to point, might not be needed
@@ -110,7 +110,7 @@ void readVtkFile(const std::string& filepath, Allpoints& allpoints, Scene& scene
             // Read faces
             for (int i = 0; i < numPolygons; i++) {
                 if (getline(file, line)) {
-                    stringstream faceStream(line);
+                    std::stringstream faceStream(line);
                     int vertexCount; // Always 3 for a triangle face
                     faceStream >> vertexCount;
 

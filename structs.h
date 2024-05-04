@@ -132,7 +132,7 @@ float operator*(const V3& A, const V3& B) { //scalar multiplication
     float result = A.x*B.x + A.y*B.y + A.z*B.z;
     return result;
 }
-float len(V3 A){ return sqrt(scalarProduct(A,A));}
+float len(V3 A){ return sqrt(A*A);}
 float operator^(const V3& A, const V3& B) { //angle between vectors
 	return asin( (A*B) / (len(A) * len(B)) );
 }
@@ -166,11 +166,11 @@ V3 normalise(V3 A){
 void calculateFaceNormal(Face& face) {
     //Point u = {face.B->x - face.A->x, face.B->y - face.A->y, face.B->z - face.A->z};
     //Point v = {face.C->x - face.A->x, face.C->y - face.A->y, face.C->z - face.A->z};
-    V3 u = *(face->B).pos - *(face->A).pos;
-    V3 v = *(face->C).pos - *(face->A).pos;
+    V3 u = face.B.pos - face.A.pos;
+    V3 v = face.C.pos - face.A.pos;
     face.normal = crossProduct(u, v);
     face.normal = normalise(face.normal);
-    if ((*(face->A)).pos * face.normal < 0){
+    if (face.A.pos * face.normal < 0){
     	face.normal = -1 * face.normal;
 	}
 }
@@ -220,7 +220,7 @@ Pixel rpi(){  return (Pixel){rand() % DRAW_WIDTH, rand() % DRAW_HEIGHT}; } //ran
 Point rpo(){ return (Point){(float)(rand() % DRAW_WIDTH), (float)(rand() % DRAW_HEIGHT)}; } //random Point
 Point rpo3(){ return (Point){(float)(rand() % 10), (float)(rand() % 10), (float)(rand() % 10)}; } //random Point
 
-Segment rs(){ return (Segment){ convertPixelToPoint(rpi()), convertPixelToPoint(rpi()) }; }; // random segment
+//Segment rs(){ return (Segment){ convertPixelToPoint(rpi()), convertPixelToPoint(rpi()) }; }; // random segment
 Segments rss(int size = 10){
 	Segments result;
 	for(size_t i=0; i<size; i++){
@@ -239,9 +239,9 @@ Contour rcont(int size){
 }
 Contour FaceToContour(Face face){
 	Contour result;
-	result.push_back(face->A);
-	result.push_back(face->B);
-	result.push_back(face->C);
+	result.push_back( *(face.A) );
+	result.push_back( *(face.B) );
+	result.push_back( *(face.C) );
 	return result;
 }
 
