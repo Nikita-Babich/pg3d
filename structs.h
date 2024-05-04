@@ -31,19 +31,23 @@ typedef struct {	// 2d
 } Pixel;
 
 struct Face;
+struct Point;
+
 typedef struct {	// used for vectors and points in 3d and 2d
     float x;          // X-coordinate
     float y;          // Y-coordinate
     float z;
     COLORREF color; // Color information
+    Point normal;
     std::vector<Face*> facePtrs;
 } Point;
 
 typedef struct {	// used for triangles in 3d
-    Point A;          // X-coordinate
-    Point B;         // Y-coordinate
-    Point C;
-     // Color information
+    Point* A;          // X-coordinate
+    Point* B;         // Y-coordinate
+    Point* C;
+     
+    Point normal;
 } Face;
 
 typedef struct {
@@ -109,11 +113,27 @@ Point& operator+=(Point& lhs, const Point& rhs) {
 	lhs.y += rhs.y;
 	lhs.z += rhs.z;
 }
+Point crossProduct(const Point& u, const Point& v) {
+    Point cross;
+    cross.x = u.y * v.z - u.z * v.y;
+    cross.y = u.z * v.x - u.x * v.z;
+    cross.z = u.x * v.y - u.y * v.x;
+    return cross;
+}
+
 
 float scalarProduct(Point A, Point B){ return A.x*B.x + A.y*B.y + A.z*B.z; }
 Point dif(Point A, Point B){ return (Point){B.x-A.x, B.y-A.y, B.z-A.z}; }
 float len(Point A){ return sqrt(scalarProduct(A,A));}
-Point normalise(Point A){ float L = len(A); return (Point){A.x/L, A.y/L, A.z/L};}
+Point normalise(Point A){ 
+	float L = len(A); 
+	if(L>0) {
+		return (Point){A.x/L, A.y/L, A.z/L};
+	} else {
+		return (Point){0, 0, 0};
+	}
+	
+}
 
 //from 2d
 Point orthoVector(Point A, Point B){Point d = dif(A,B); return (Point){-d.y,d.x};} //only 2d

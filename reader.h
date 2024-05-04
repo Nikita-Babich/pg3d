@@ -59,6 +59,8 @@ void read_config(){
 
 std::string filepath = "files/cube.vtk";
 void readVtkFile(const string& filepath, Allpoints& allpoints, Scene& scene) {
+	allpoints.clear();
+	scene.clear();
     ifstream file(filepath);
     if (!file) {
         cerr << "Error: Unable to open file " << filepath << endl;
