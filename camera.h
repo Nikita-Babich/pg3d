@@ -154,23 +154,24 @@ Pixel project_point(const Point& P){
 	//depending on the current mode find coordinates on the drawing plane
 	Pixel result;
 	Point relative = P - camera.pos;
-	float phi_hor = relative^camera.right;
-	float phi_vert = relative^camera.up;
 	
-	//float coord1 = - phi_hor * (180/M_PI) * (DRAW_WIDTH / FOV) + DRAW_WIDTH/2;
-	//float coord2 = - phi_vert * (180/M_PI) * (DRAW_WIDTH / FOV) + DRAW_WIDTH/2;
-	float alpha = (180-FOV)/2;
-	float coord1 = (M_PI - phi_hor) * (180/M_PI) - alpha;
-	float coord2 = (phi_vert) * (180/M_PI) - alpha;
+	if(Pmode){
+		float phi_hor = relative^camera.right;
+		float phi_vert = relative^camera.up;
 	
-	int c1 = static_cast<int>(coord1);
-	int c2 = static_cast<int>(coord2);
+		//float coord1 = - phi_hor * (180/M_PI) * (DRAW_WIDTH / FOV) + DRAW_WIDTH/2;
+		//float coord2 = - phi_vert * (180/M_PI) * (DRAW_WIDTH / FOV) + DRAW_WIDTH/2;
+		float alpha = (180-FOV)/2;
+		float coord1 = (M_PI - phi_hor) * (180/M_PI) - alpha;
+		float coord2 = (phi_vert) * (180/M_PI) - alpha;
+		int c1 = static_cast<int>(coord1);
+		int c2 = static_cast<int>(coord2);
+		result.x = c1;
+		result.y = c2;
+		result.color = P.color;
+		return result;
+	}
 	
-	result.x = c1;
-	result.y = c2;
-	result.color = P.color;
-	
-	return result;
 	
 }
 
@@ -178,6 +179,8 @@ Pixel project_point(const Point& P){
 
 void drawFace(Face face){
 	Contour cont1 = FaceToContour(Face face);
+	Segments f = convertContourToSegments(C);
+	drawSegments(  f, main_color);
 	switch(Pmode){
 		case false: //planar projection
 			
