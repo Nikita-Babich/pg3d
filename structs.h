@@ -122,6 +122,7 @@ Point crossProduct(const Point& u, const Point& v) {
 }
 
 
+
 float scalarProduct(Point A, Point B){ return A.x*B.x + A.y*B.y + A.z*B.z; }
 Point dif(Point A, Point B){ return (Point){B.x-A.x, B.y-A.y, B.z-A.z}; }
 float len(Point A){ return sqrt(scalarProduct(A,A));}
@@ -132,7 +133,29 @@ Point normalise(Point A){
 	} else {
 		return (Point){0, 0, 0};
 	}
-	
+}
+void calculateFaceNormal(Face& face) {
+    //Point u = {face.B->x - face.A->x, face.B->y - face.A->y, face.B->z - face.A->z};
+    //Point v = {face.C->x - face.A->x, face.C->y - face.A->y, face.C->z - face.A->z};
+    Point u = *(face.B) - *(face.A);
+    Point v = *(face.C) - *(face.A);
+    face.normal = crossProduct(u, v);
+    face.normal = normalise(face.normal);
+}
+void calculatePointNormal(Point& point) {
+    // Initialize the normal vector
+    point.normal = {0, 0, 0};
+
+    // Iterate over all faces the point is part of
+    for (Face* face : point.facePtrs) {
+        // Accumulate the normals of the connected faces
+        point.normal.x += face.normal.x;
+        point.normal.y += face.normal.y;
+        point.normal.z += face.normal.z;
+    }
+
+    // Normalize the accumulated normal
+    point.normal = normalise(point.normal);
 }
 
 //from 2d
