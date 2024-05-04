@@ -31,6 +31,7 @@ camera.beta = 0; // grows towards left
 camera.alpha = 0; // grows towards up
 
 float fov = M_PI/2;
+float scaling = 100;
 
 Point x_const = {1,0,0};
 Point y_const = {0,1,0};
@@ -155,6 +156,8 @@ Pixel project_point(const Point& P){
 	Pixel result;
 	Point relative = P - camera.pos;
 	
+	float coord1, coord2;
+	
 	if(Pmode){
 		float phi_hor = relative^camera.right;
 		float phi_vert = relative^camera.up;
@@ -162,17 +165,22 @@ Pixel project_point(const Point& P){
 		//float coord1 = - phi_hor * (180/M_PI) * (DRAW_WIDTH / FOV) + DRAW_WIDTH/2;
 		//float coord2 = - phi_vert * (180/M_PI) * (DRAW_WIDTH / FOV) + DRAW_WIDTH/2;
 		float alpha = (180-FOV)/2;
-		float coord1 = (M_PI - phi_hor) * (180/M_PI) - alpha;
-		float coord2 = (phi_vert) * (180/M_PI) - alpha;
-		int c1 = static_cast<int>(coord1);
-		int c2 = static_cast<int>(coord2);
-		result.x = c1;
-		result.y = c2;
-		result.color = P.color;
-		return result;
+		coord1 = (M_PI - phi_hor) * (180/M_PI) - alpha;
+		coord2 = (phi_vert) * (180/M_PI) - alpha;
+		
+	} else {
+		coord1 = relative*camera.right / len(camera.right);
+		coord2 = relative*camera.up / len(camera.up);
+		
+		coord1 *= scaling;
+		coord2 *= scaling;
 	}
-	
-	
+	int c1 = static_cast<int>(coord1);
+	int c2 = static_cast<int>(coord2);
+	result.x = c1;
+	result.y = c2;
+	result.color = P.color;
+	return result;
 }
 
 
@@ -181,14 +189,6 @@ void drawFace(Face face){
 	Contour cont1 = FaceToContour(Face face);
 	Segments f = convertContourToSegments(C);
 	drawSegments(  f, main_color);
-	switch(Pmode){
-		case false: //planar projection
-			
-			break;
-		case true: //spherical
-			
-			break;
-	}
 	
 }
 

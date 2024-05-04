@@ -81,6 +81,22 @@ void dda2( Pixel start, Pixel end, COLORREF color) {
 		i++;
 	}
 };
+void drawLine( Point start_float, Point end_float, COLORREF color){
+	//Pixel start = convertPointToPixel(start_float);
+	//Pixel end = convertPointToPixel(end_float);
+	Pixel start = project_point(start_float);
+	Pixel end = project_point(end_float);
+	
+	dda2(  start, end, color);
+	
+}
+void drawSegment(  Segment s, COLORREF color){ drawLine(  s.start, s.finish, color); };
+void drawSegments(  Segments f, COLORREF color){
+	for (const Segment& segment : f) {
+		drawSegment(  segment, color);
+	};
+}
+
 
 //triangle section
 COLORREF colorchooser(float x, float y, Contour C){
