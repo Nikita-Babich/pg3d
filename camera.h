@@ -28,6 +28,10 @@ typedef struct Camera_ Camera;
 
 Camera camera;
 
+void report(){
+	printf("cam: %f,%f,%f  %f %f\n", camera.pos.x, camera.pos.y, camera.pos.z, camera.alpha, camera.beta);
+}
+
 
 float fov = M_PI/2;
 float scaling = 100;
@@ -86,7 +90,7 @@ void calc_orient(){ //use alpha beta to calculte orientation vectors, matices
 
 void move(Direction dir){
 	calc_orient();
-	float ms = 0.3; //ms = movement speed
+	float ms = 0.05; //ms = movement speed
 	switch (dir) {
     case LEFT:
         camera.pos += ms * (- camera.right);
@@ -114,27 +118,27 @@ void move(Direction dir){
 void turn(Direction dir){
 	float rs = 0.03;
 	switch (dir) {
-    case LEFT:
-        camera.beta += rs;
-        break;
-    case RIGHT:
-        camera.beta -= rs;
-        break;
-    case UP:
-        camera.alpha += rs;
-        break;
-    case DOWN:
-        camera.alpha -= rs;
-        break;
-    case FORWARD:
+    	case LEFT:
+        	camera.beta += rs;
+        	break;
+    	case RIGHT:
+        	camera.beta -= rs;
+        	break;
+    	case UP:
+        	camera.alpha += rs;
+        	break;
+    	case DOWN:
+        	camera.alpha -= rs;
+        	break;
+    	case FORWARD:
         
-        break;
-    case BACKWARD:
+        	break;
+    	case BACKWARD:
         
-        break;
-    default:
+        	break;
+    	default:
         
-        break;
+        	break;
 	}
 	if(camera.alpha > M_PI/2 ) {
 		camera.alpha = M_PI/2;

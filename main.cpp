@@ -232,6 +232,9 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			case 'D': move(RIGHT);  break;
 			case 'A': move(LEFT);  break;
 			
+			case VK_SPACE: move(UP); break;
+			case VK_SHIFT: move(DOWN); break;
+			
 			case 'Z': Pmode = !Pmode;  break;
 			case 'X': Dmode = !Dmode;  break;
 			case 'C':
@@ -263,6 +266,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 				// Process other non-character keystrokes. 
 				break; 
         }
+        report();
         InvalidateRect(hwnd, NULL, FALSE);
         break;
 

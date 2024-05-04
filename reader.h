@@ -146,9 +146,9 @@ void readVtkFile(const std::string& filepath, Allpoints& allpoints, Scene& scene
     						Face* addedFace = &scene.back();
 							if(debug)printf("Face added\n");
     						// Update point facePtrs vectors, now points have pointers to the added face
-    						if (face.A) addedFace->A->facePtrs.push_back(addedFace);
-    						if (face.B) addedFace->B->facePtrs.push_back(addedFace);
-    						if (face.C) addedFace->C->facePtrs.push_back(addedFace);
+    						//if (face.A) addedFace->A->facePtrs.push_back(addedFace);
+    						//if (face.B) addedFace->B->facePtrs.push_back(addedFace);
+    						//if (face.C) addedFace->C->facePtrs.push_back(addedFace);
     						if(debug)printf("Points updated\n");
 						} else {
     						std::cerr << "Index out of bounds for pointRefs vector." << std::endl;

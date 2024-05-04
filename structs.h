@@ -44,7 +44,7 @@ typedef struct {	// used for vectors and points in 3d and 2d
     V3 pos;
     V3 normal;
     COLORREF color; // Color information
-    std::vector<Face_*> facePtrs;
+    //std::vector<Face_*> facePtrs;
 } Point;
 
 struct Face_ {	// used for triangles in 3d
@@ -163,6 +163,7 @@ V3 normalise(V3 A){
 		return (V3){0, 0, 0};
 	}
 }
+
 void calculateFaceNormal(Face& face) {
     //Point u = {face.B->x - face.A->x, face.B->y - face.A->y, face.B->z - face.A->z};
     //Point v = {face.C->x - face.A->x, face.C->y - face.A->y, face.C->z - face.A->z};
@@ -174,32 +175,34 @@ void calculateFaceNormal(Face& face) {
     	face.normal = -1 * face.normal;
 	}
 }
-void calculatePointNormal(Point& point) {
-    // Initialize the normal vector
-    point.normal = (V3){0, 0, 0};
 
-    // Iterate over all faces the point is part of
-    for (Face* face : point.facePtrs) {
-        // Accumulate the normals of the connected faces
-        point.normal.x += face->normal.x;
-        point.normal.y += face->normal.y;
-        point.normal.z += face->normal.z;
-    }
+//void calculatePointNormal(Point& point) {
+//    // Initialize the normal vector
+//    point.normal = (V3){0, 0, 0};
+//
+//    // Iterate over all faces the point is part of
+//    for (Face* face : point.facePtrs) {
+//        // Accumulate the normals of the connected faces
+//        point.normal.x += face->normal.x;
+//        point.normal.y += face->normal.y;
+//        point.normal.z += face->normal.z;
+//    }
+//
+//    // Normalize the accumulated normal
+//    point.normal = normalise(point.normal);
+//}
 
-    // Normalize the accumulated normal
-    point.normal = normalise(point.normal);
-}
-void calculateNormals(Allpoints& allpoints, Scene& scene) {
-    // Calculate normals for each face
-    for (Face& face : scene) {
-        calculateFaceNormal(face);
-    }
-
-    // Calculate normals for each point
-    for (Point& point : allpoints) {
-        calculatePointNormal(point);
-    }
-}
+//void calculateNormals(Allpoints& allpoints, Scene& scene) {
+//    // Calculate normals for each face
+//    for (Face& face : scene) {
+//        calculateFaceNormal(face);
+//    }
+//
+//    // Calculate normals for each point
+//    for (Point& point : allpoints) {
+//        calculatePointNormal(point);
+//    }
+//}
 
 //from 2d
 //Point orthoVector(Point A, Point B){Point d = dif(A,B); return (Point){-d.y,d.x};} //only 2d
