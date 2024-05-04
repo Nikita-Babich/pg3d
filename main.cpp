@@ -238,10 +238,10 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			case VK_SHIFT: move(DOWN); break;
 			
 			case 'I': camera.dist = camera.dist - 0.1;  
-				camera.pos = camera.dist * camera.pos;
+				//camera.pos = camera.dist * camera.pos;
 				break;
 			case 'K': camera.dist = camera.dist + 0.1; 
-				camera.pos = camera.dist * camera.pos;
+				//camera.pos = camera.dist * camera.pos;
 				 break;
 			
 			case 'Z': Pmode = !Pmode;  break;
