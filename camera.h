@@ -15,7 +15,7 @@ struct Camera_ {	//
     V3 pos;          //position
     float beta; 		//horisontal angle
     float alpha;		//vertical angle, there is no roll
-    float dist=3;
+    float dist=1.2;
     
     // result of orientation calculation, 3 relative vectors
     V3 forw;   //from y
@@ -173,10 +173,10 @@ void rot(Direction dir){
         	camera.alpha -= rs;
         	break;
     	case FORWARD:
-        	camera.dist -= 1;
+        	//camera.dist -= 1;
         	break;
     	case BACKWARD:
-        	camera.dist += 1;
+        	//camera.dist += 1;
         	break;
     	default:
         
@@ -200,7 +200,7 @@ void rot(Direction dir){
 	camera.pos = camera.dist*((V3){0,-1,0});
 	calc_orient();
 	camera.pos = rotateAroundAxis(camera.pos, up_const, camera.beta);
-	camera.pos = rotateAroundAxis(camera.pos, camera.right, camera.beta);
+	camera.pos = rotateAroundAxis(camera.pos, camera.right, camera.alpha);
 	
 }
 
@@ -223,8 +223,10 @@ Pixel project_point(const Point& P){
 		coord2 = (phi_vert) * (180/M_PI) - alpha ;//  + DRAW_WIDTH/2; //causes freeze
 		
 		//here is the magic + DRAW_WIDTH/2; replace with 400 and it somehow starts working!
-		c1 = static_cast<int>(floor(coord1)) + 400;
-		c2 = static_cast<int>(floor(coord2)) + 400;
+		c1 = static_cast<int>(floor(coord1));
+		c2 = static_cast<int>(floor(coord2)) + 200;
+		c1 = c1 * 2;
+		c2 = c2 * 2;
 		
 	} else { //flat works
 		coord1 = (relative*camera.right) / len(camera.right);

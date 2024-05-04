@@ -237,6 +237,13 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			case VK_SPACE: move(UP); break;
 			case VK_SHIFT: move(DOWN); break;
 			
+			case 'I': camera.dist = camera.dist - 0.1;  
+				camera.pos = camera.dist * camera.pos;
+				break;
+			case 'K': camera.dist = camera.dist + 0.1; 
+				camera.pos = camera.dist * camera.pos;
+				 break;
+			
 			case 'Z': Pmode = !Pmode;  break;
 			case 'X': Dmode = !Dmode;  break;
 			case 'C': break;
@@ -267,6 +274,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 				// Process other non-character keystrokes. 
 				break; 
         }
+        if(camera.dist<0)camera.dist=1;
         report();
         InvalidateRect(hwnd, NULL, FALSE);
         break;
