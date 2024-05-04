@@ -15,6 +15,7 @@ struct Camera_ {	//
     V3 pos;          //position
     float beta; 		//horisontal angle
     float alpha;		//vertical angle, there is no roll
+    float dist=3;
     
     // result of orientation calculation, 3 relative vectors
     V3 forw;   //from y
@@ -116,7 +117,9 @@ void move(Direction dir){
 	}
 }
 void turn(Direction dir){
+	
 	float rs = 0.03;
+
 	switch (dir) {
     	case LEFT:
         	camera.beta += rs;
@@ -152,9 +155,57 @@ void turn(Direction dir){
 	if(camera.beta < 0 ) {
 		camera.beta += M_PI*2;
 	}
+	calc_orient();
+}
+void rot(Direction dir){
+	float rs = 0.03;
+	switch (dir) {
+    	case LEFT:
+        	camera.beta += rs;
+        	break;
+    	case RIGHT:
+        	camera.beta -= rs;
+        	break;
+    	case UP:
+        	camera.alpha += rs;
+        	break;
+    	case DOWN:
+        	camera.alpha -= rs;
+        	break;
+    	case FORWARD:
+        	camera.dist -= 1;
+        	break;
+    	case BACKWARD:
+        	camera.dist += 1;
+        	break;
+    	default:
+        
+        	break;
+	}
+	
+	
+	if(camera.alpha > M_PI/2 ) {
+		camera.alpha = M_PI/2;
+	}
+	if(camera.alpha < -M_PI/2 ) {
+		camera.alpha = -M_PI/2;
+	}
+	if(camera.beta > M_PI*2 ) {
+		camera.beta -= M_PI*2;
+	}
+	if(camera.beta < 0 ) {
+		camera.beta += M_PI*2;
+	}
+	
+	camera.pos = camera.dist*((V3){0,-1,0});
+	calc_orient();
+	camera.pos = rotateAroundAxis(camera.pos, up_const, camera.beta);
+	camera.pos = rotateAroundAxis(camera.pos, camera.right, camera.beta);
+	
 }
 
 Pixel project_point(const Point& P){
+	calc_orient();
 	//depending on the current mode find coordinates on the drawing plane
 	Pixel result;
 	V3 relative = P.pos - camera.pos;
@@ -168,18 +219,18 @@ Pixel project_point(const Point& P){
 		//float coord1 = - phi_hor * (180/M_PI) * (DRAW_WIDTH / FOV) + DRAW_WIDTH/2;
 		//float coord2 = - phi_vert * (180/M_PI) * (DRAW_WIDTH / FOV) + DRAW_WIDTH/2;
 		float alpha = (180-FOV)/2;
-		coord1 = (M_PI - phi_hor) * (180/M_PI) - alpha;
-		coord2 = (phi_vert) * (180/M_PI) - alpha;
+		coord1 = (M_PI - phi_hor) * (180/M_PI) - alpha;//  + DRAW_WIDTH/2;
+		coord2 = (phi_vert) * (180/M_PI) - alpha;//  + DRAW_WIDTH/2;
 		
-	} else {
+	} else { //works
 		coord1 = relative*camera.right / len(camera.right);
 		coord2 = relative*camera.up / len(camera.up);
 		
-		coord1 *= scaling;
-		coord2 *= scaling;
+		coord1 *= scaling ;
+		coord2 *= scaling ;
 	}
-	int c1 = static_cast<int>(coord1);
-	int c2 = static_cast<int>(coord2);
+	int c1 = static_cast<int>(coord1) + DRAW_WIDTH/2;
+	int c2 = static_cast<int>(coord2) + DRAW_WIDTH/2;
 	result.x = c1;
 	result.y = c2;
 	//result.color = P.color; //##

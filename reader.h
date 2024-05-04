@@ -129,7 +129,8 @@ void readVtkFile(const std::string& filepath, Allpoints& allpoints, Scene& scene
                         Face face;
                         int indexA, indexB, indexC;
                         faceStream >> indexA >> indexB >> indexC;
-						if(debug)printf("%d %d %d", indexA, indexB, indexC);
+						//if(debug)printf("%d %d %d", indexA, indexB, indexC);
+						
                         // Set pointers to points from allpoints
 						if (indexA >= 0 && indexA < pointRefs.size() &&
     						indexB >= 0 && indexB < pointRefs.size() &&
@@ -144,16 +145,18 @@ void readVtkFile(const std::string& filepath, Allpoints& allpoints, Scene& scene
 
     						// Get the address of the newly added face in the scene vector
     						Face* addedFace = &scene.back();
-							if(debug)printf("Face added\n");
+							//if(debug)printf("Face added\n");
+							
     						// Update point facePtrs vectors, now points have pointers to the added face
     						//if (face.A) addedFace->A->facePtrs.push_back(addedFace);
     						//if (face.B) addedFace->B->facePtrs.push_back(addedFace);
     						//if (face.C) addedFace->C->facePtrs.push_back(addedFace);
-    						if(debug)printf("Points updated\n");
+    						
+    						//if(debug)printf("Points updated\n");
 						} else {
     						std::cerr << "Index out of bounds for pointRefs vector." << std::endl;
 						}
-                        if(debug)printf("Points got their pointers\n");
+                        //if(debug)printf("Points got their pointers\n");
                     } else {
                     	printf("Line did not declare 3 vertices\n");
 					}

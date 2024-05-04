@@ -199,10 +199,10 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
     case WM_KEYDOWN:
         // Handle keydown event
         switch (wParam) {
-            case VK_LEFT:  break;
-            case VK_RIGHT:   break;
-            case VK_UP:  break; 
-			case VK_DOWN:   break; 
+            case VK_LEFT:  rot(LEFT); break;
+            case VK_RIGHT: rot(RIGHT);  break;
+            case VK_UP: rot(UP); break; 
+			case VK_DOWN: rot(DOWN);  break; 
 			case VK_HOME: 
 				// Process the HOME key. 
 				break; 
@@ -232,13 +232,14 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			case 'D': move(RIGHT);  break;
 			case 'A': move(LEFT);  break;
 			
+			
+			
 			case VK_SPACE: move(UP); break;
 			case VK_SHIFT: move(DOWN); break;
 			
 			case 'Z': Pmode = !Pmode;  break;
 			case 'X': Dmode = !Dmode;  break;
-			case 'C':
-				break;
+			case 'C': break;
 			case 'V': triangle_method = !triangle_method;
 				break;
 				
