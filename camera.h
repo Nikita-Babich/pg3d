@@ -165,13 +165,33 @@ Pixel project_point(const Point& P){
 	
 	int c1 = static_cast<int>(coord1);
 	int c2 = static_cast<int>(coord2);
-	 //##
 	
 	result.x = c1;
 	result.y = c2;
 	result.color = P.color;
 	
 	return result;
+	
+}
+
+Contour FaceToContour(Face face){
+	Contour result;
+	result.push_back(face.A);
+	result.push_back(face.B);
+	result.push_back(face.C);
+	return result;
+}
+
+void drawFace(Face face){
+	Contour cont1 = FaceToContour(Face face);
+	switch(Pmode){
+		case false: //planar projection
+			
+			break;
+		case true: //spherical
+			
+			break;
+	}
 	
 }
 

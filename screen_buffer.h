@@ -83,6 +83,44 @@ void dda2( Pixel start, Pixel end, COLORREF color) {
 };
 
 //triangle section
+COLORREF colorchooser(float x, float y, Contour C){
+	Point P = (Point){x,y};
+	if(triangle_method){ //blend
+		float L0 = abs(
+			(C[1].x-P.x) * (C[2].y-P.y) - (C[1].y - P.y) * (C[2].x - P.x)
+			) / abs(
+			(C[1].x-C[0].x) * (C[2].y-C[0].y) - (C[1].y - C[0].y) * (C[2].x - C[0].x)
+		);
+		float L1 = abs(
+			(C[0].x-P.x) * (C[2].y-P.y) - (C[0].y - P.y) * (C[2].x - P.x)
+			) / abs(
+			(C[1].x-C[0].x) * (C[2].y-C[0].y) - (C[1].y - C[0].y) * (C[2].x - C[0].x)
+		);
+		float L2 = 1 - L0 - L1;
+		int R1, G1, B1, R2, G2, B2, R3, G3, B3;
+    	ExtractRGBComponents(RED, &R1, &G1, &B1);
+    	ExtractRGBComponents(GREEN, &R2, &G2, &B2);
+    	ExtractRGBComponents(BLUE, &R3, &G3, &B3);
+		
+		int R = (int)(L0 * R1 + L1 * R2 + L2 * R3);
+    	int G = (int)(L0 * G1 + L1 * G2 + L2 * G3);
+    	int B = (int)(L0 * B1 + L1 * B2 + L2 * B3);
+    	R = (R < 0) ? 0 : ((R > 255) ? 255 : R);
+    	G = (G < 0) ? 0 : ((G > 255) ? 255 : G);
+    	B = (B < 0) ? 0 : ((B > 255) ? 255 : B);
+    	
+    	return RGB(R, G, B);
+    
+	} else { //closest point
+		float d0 = dist(P,C[0]);
+		float d1 = dist(P,C[1]);
+		float d2 = dist(P,C[2]);
+		if (d0<d1 && d0 < d2) return RED;
+		if (d1<d0 && d1 < d2) return GREEN;
+		if (d2<d0 && d2 < d1) return BLUE;
+	};
+	return RED;
+}
 void fill_sliced_triangle(Contour C, Contour orig){
 	Segment e1, e2; float we1, we2;
 	float y = e1.start.y; float ymax = e1.finish.y;
