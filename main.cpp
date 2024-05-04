@@ -40,8 +40,8 @@
 //---------------
 //My headers
 #include "colors.h" //independent
-#include "screen_buffer.h" //include after windows and colors
 #include "structs.h" //geometry core, include after vector and math
+#include "screen_buffer.h" //include after windows and colors and structs
 #include "zbuffer.h" // after sizes define, before camera
 #include "camera.h" //include after structs
 #include "reader.h" //after structs and camera, because contains settings

@@ -33,12 +33,18 @@ typedef struct {	// 2d
 struct Face;
 struct Point;
 
+typedef struct {
+	float x;          // X-coordinate
+    float y;          // Y-coordinate
+    float z;
+} V3;
+
 typedef struct {	// used for vectors and points in 3d and 2d
     float x;          // X-coordinate
     float y;          // Y-coordinate
     float z;
     COLORREF color; // Color information
-    Point normal;
+    Normal normal;
     std::vector<Face*> facePtrs;
 } Point;
 
