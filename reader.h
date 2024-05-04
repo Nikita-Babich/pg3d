@@ -131,20 +131,28 @@ void readVtkFile(const std::string& filepath, Allpoints& allpoints, Scene& scene
                         faceStream >> indexA >> indexB >> indexC;
 						if(debug)printf("%d %d %d", indexA, indexB, indexC);
                         // Set pointers to points from allpoints
-                        face.A = pointRefs[indexA];
-                        face.B = pointRefs[indexB];
-                        face.C = pointRefs[indexC];
-                        
-						if(debug)printf("Face pointers set\n");
-						
-                        // Add face to scene
-                        scene.push_back(face);
-                        if(debug)printf("Face added to scene\n");
+						if (indexA >= 0 && indexA < pointRefs.size() &&
+    						indexB >= 0 && indexB < pointRefs.size() &&
+    						indexC >= 0 && indexC < pointRefs.size()) {
 
-                        // Update point facePtrs vectors, now points have pointers to face
-                        face.A->facePtrs.push_back(&scene.back());
-                        face.B->facePtrs.push_back(&scene.back());
-                        face.C->facePtrs.push_back(&scene.back());
+    						face.A = pointRefs[indexA];
+    						face.B = pointRefs[indexB];
+    						face.C = pointRefs[indexC];
+
+    						// Add face to scene
+    						scene.push_back(face);
+
+    						// Get the address of the newly added face in the scene vector
+    						Face* addedFace = &scene.back();
+							if(debug)printf("Face added\n");
+    						// Update point facePtrs vectors, now points have pointers to the added face
+    						if (face.A) addedFace->A->facePtrs.push_back(addedFace);
+    						if (face.B) addedFace->B->facePtrs.push_back(addedFace);
+    						if (face.C) addedFace->C->facePtrs.push_back(addedFace);
+    						if(debug)printf("Points updated\n");
+						} else {
+    						std::cerr << "Index out of bounds for pointRefs vector." << std::endl;
+						}
                         if(debug)printf("Points got their pointers\n");
                     } else {
                     	printf("Line did not declare 3 vertices\n");
