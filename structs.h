@@ -141,6 +141,9 @@ void calculateFaceNormal(Face& face) {
     Point v = *(face.C) - *(face.A);
     face.normal = crossProduct(u, v);
     face.normal = normalise(face.normal);
+    if ((*(face.A)) * face.normal < 0){
+    	face.normal = -1 * face.normal;
+	}
 }
 void calculatePointNormal(Point& point) {
     // Initialize the normal vector
@@ -156,6 +159,17 @@ void calculatePointNormal(Point& point) {
 
     // Normalize the accumulated normal
     point.normal = normalise(point.normal);
+}
+void calculateNormals(Allpoints& allpoints, Scene& scene) {
+    // Calculate normals for each face
+    for (Face& face : scene) {
+        calculateFaceNormal(face);
+    }
+
+    // Calculate normals for each point
+    for (Point& point : allpoints) {
+        calculatePointNormal(point);
+    }
 }
 
 //from 2d
