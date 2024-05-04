@@ -174,13 +174,7 @@ Pixel project_point(const Point& P){
 	
 }
 
-Contour FaceToContour(Face face){
-	Contour result;
-	result.push_back(face.A);
-	result.push_back(face.B);
-	result.push_back(face.C);
-	return result;
-}
+
 
 void drawFace(Face face){
 	Contour cont1 = FaceToContour(Face face);

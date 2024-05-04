@@ -61,6 +61,7 @@ typedef std::vector<Face> Scene;
 //global object;
 Scene scene;
 Allpoints allpoints;
+Point light;
 bool Pmode = false; //plane vs spherical projection
 bool Dmode = false; //wireframe vs coloring
 
@@ -150,8 +151,15 @@ Contour rcont(int size){
 	}
 	return result;
 }
+Contour FaceToContour(Face face){
+	Contour result;
+	result.push_back(face.A);
+	result.push_back(face.B);
+	result.push_back(face.C);
+	return result;
+}
 
-//reader section
+
 
 
 #endif // STRUCTS_INCLUDED

@@ -20,6 +20,8 @@
 
 //Task specific
 #include <iostream>
+#include <fstream>
+#include <sstream>
 #include <vector>
 #include <algorithm>
 #include <cfloat>
@@ -42,6 +44,7 @@
 #include "structs.h" //geometry core, include after vector and math
 #include "zbuffer.h" // after sizes define, before camera
 #include "camera.h" //include after structs
+#include "reader.h" //after structs and camera, because contains settings
 
 
 //End of my headers
