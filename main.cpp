@@ -189,10 +189,10 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
     case WM_KEYDOWN:
         // Handle keydown event
         switch (wParam) {
-            case VK_LEFT: translateMainContour(LEFT); break;
-            case VK_RIGHT: translateMainContour(RIGHT);  break;
-            case VK_UP: translateMainContour(UP); break; 
-			case VK_DOWN: translateMainContour(DOWN);  break; 
+            case VK_LEFT:  break;
+            case VK_RIGHT:   break;
+            case VK_UP:  break; 
+			case VK_DOWN:   break; 
 			case VK_HOME: 
 				// Process the HOME key. 
 				break; 
@@ -209,10 +209,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 				// Process the F2 key. 
 				break; 
 				
-			case 'C':
-				//random_main_color();
-				//OpenColorPicker(hwnd,0);
-				break;
+			
 			case 'V':
 				//random_main_color();
 				//OpenColorPicker(hwnd,1);
@@ -230,6 +227,10 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			
 			case 'Z': Pmode = !Pmode;  break;
 			case 'X': Dmode = !Dmode;  break;
+			case 'C':
+				break;
+			case 'V': triangle_method = !triangle_method;
+				break;
 			
 			//case 'T': shearMainContour(UP);  break;
 			//case 'G': shearMainContour(DOWN);  break;

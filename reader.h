@@ -4,9 +4,9 @@
 
 
 void read_config(){
-	ifstream configFile("config.txt");
+	std::ifstream configFile("config.txt");
     if (!configFile) {
-        cerr << "Error: Unable to open config.txt" << endl;
+        std::cerr << "Error: Unable to open config.txt" << endl;
         return;
     }
     
@@ -15,7 +15,7 @@ void read_config(){
     int colorr,colorg,colorb;
     while (getline(configFile, line)) {
         if (lineCount % 2 == 1) {
-        	stringstream ss(line);
+        	std::stringstream ss(line);
             switch (lineCount) {
                 case 1:
                     ss >> Pmode;
@@ -58,23 +58,23 @@ void read_config(){
 }
 
 std::string filepath = "files/cube.vtk";
-void readVtkFile(const string& filepath, Allpoints& allpoints, Scene& scene) {
+void readVtkFile(const std::string& filepath, Allpoints& allpoints, Scene& scene) {
 	allpoints.clear();
 	scene.clear();
-    ifstream file(filepath);
+    std::ifstream file(filepath);
     if (!file) {
-        cerr << "Error: Unable to open file " << filepath << endl;
+        std::cerr << "Error: Unable to open file " << filepath << std::endl;
         return;
     }
     
-    string line;
+    std::string line;
     bool processingPoints = false;
     bool processingFaces = false;
     
     std::vector<Point*> pointRefs;
     
-    while (getline(file, line)) {
-        stringstream ss(line);
+    while (std::getline(file, line)) {
+        std::stringstream ss(line);
         std::string keyword;
         ss >> keyword;
 
@@ -86,13 +86,13 @@ void readVtkFile(const string& filepath, Allpoints& allpoints, Scene& scene) {
             processingFaces = false;
             int numPoints;
             ss >> numPoints; 
-            string type;
+            std::string type;
             ss >> type; // Type  float
 
             // Read points
             for (int i = 0; i < numPoints; i++) {
-                if (getline(file, line)) {
-                    stringstream pointStream(line);
+                if (std::getline(file, line)) {
+                    std::stringstream pointStream(line);
                     Point p;
                     pointStream >> p.x >> p.y >> p.z;
                     p.color = main_color; // object color

@@ -20,13 +20,10 @@ COLORREF ambience;
 
 COLORREF rc(){ return RGB(rand()%255, rand()%255, rand()%255); };
 
-void unpackColorRef(COLORREF color, int& red, int& green, int& blue) {
-    // Extract the blue component (least significant byte)
-    blue = color & 0xFF;
-    // Extract the green component (middle byte)
-    green = (color >> 8) & 0xFF;
-    // Extract the red component (most significant byte)
-    red = (color >> 16) & 0xFF;
+void ExtractRGBComponents(COLORREF color, int *red, int *green, int *blue) {
+    *red = GetRValue(color);
+    *green = GetGValue(color);
+    *blue = GetBValue(color);
 }
 
 #endif // COLORS_INCLUDED

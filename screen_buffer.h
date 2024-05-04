@@ -57,7 +57,7 @@ void DrawPixel(int x, int y, COLORREF color) {
     }
 }
 void DrawPoint(Point A, COLORREF color){
-	DrawPixel(static_cast<int>(A.x),static_cast<int>(A.y),color); //was float
+	DrawPixel(static_cast<int>(A.pos.x),static_cast<int>(A.pos.y), color); //was float
 }
 void dda2( Pixel start, Pixel end, COLORREF color) {
 	int x1 = start.x; int y1 = start.y;
@@ -81,23 +81,11 @@ void dda2( Pixel start, Pixel end, COLORREF color) {
 		i++;
 	}
 };
-void drawLine( Point start_float, Point end_float, COLORREF color){
-	//Pixel start = convertPointToPixel(start_float);
-	//Pixel end = convertPointToPixel(end_float);
-	Pixel start = project_point(start_float);
-	Pixel end = project_point(end_float);
-	
-	dda2(  start, end, color);
-	
-}
-void drawSegment(  Segment s, COLORREF color){ drawLine(  s.start, s.finish, color); };
-void drawSegments(  Segments f, COLORREF color){
-	for (const Segment& segment : f) {
-		drawSegment(  segment, color);
-	};
-}
 
 
+
+
+bool triangle_method = true;
 //triangle section
 COLORREF colorchooser(float x, float y, Contour C){
 	Point P = (Point){x,y};
@@ -171,20 +159,20 @@ void fill_sliced_triangle(Contour C, Contour orig){
 }
 void fill_triangle(Contour C, Contour orig){
 	std::sort(C.begin(), C.end(), [](const Point& a, const Point& b) {
-        if (a.y == b.y) return a.x < b.x;
-        return a.y < b.y;
+        if (a.pos.y == b.pos.y) return a.pos.x < b.pos.x;
+        return a.pos.y < b.pos.y;
     });
-    if(C[0].y == C[1].y || C[1].y == C[2].y) {
+    if(C[0].pos.y == C[1].pos.y || C[1].pos.y == C[2].pos.y) {
     	fill_sliced_triangle(C, orig);
 	} else { // slicing
-		float m = (C[2].y - C[0].y)/(C[2].x - C[0].x);
+		float m = (C[2].pos.y - C[0].pos.y)/(C[2].pos.x - C[0].pos.x);
 		Point P = (Point){
-			(C[1].y-C[0].y)/m + C[0].x,
-			C[1].y
+			(C[1].pos.y-C[0].pos.y)/m + C[0].pos.x,
+			C[1].pos.y
 		};
 		Contour upper;
 		Contour lower;
-		if(C[1].x < P.x){
+		if(C[1].pos.x < P.pos.x){
 			upper.push_back(C[0]); upper.push_back(C[1]); upper.push_back(P);
 			lower.push_back(C[1]); lower.push_back(P); lower.push_back(C[2]);
 			fill_sliced_triangle(upper, orig);

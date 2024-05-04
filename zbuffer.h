@@ -18,8 +18,8 @@ ZBuffer zbuffer(DRAW_HEIGHT, DRAW_WIDTH);
 
 void resetZBuffer() {
     float maxFloat = std::numeric_limits<float>::max();
-    for (int i = 0; i < zBuffer.height; ++i) {
-        for (int j = 0; j < zBuffer.width; ++j) {
+    for (int i = 0; i < zbuffer.height; ++i) {
+        for (int j = 0; j < zbuffer.width; ++j) {
             zBuffer.depthBuffer[i][j] = maxFloat;
         }
     }

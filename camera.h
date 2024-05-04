@@ -11,19 +11,20 @@
 //there is only one camera at any instance, so instead of functions procedures are used here
 // Camera should change in place to be the global object
 float FOV = 90;
-typedef struct {	// 
-    Point pos;          //position
+struct Camera_ {	// 
+    V3 pos;          //position
     float beta; 		//horisontal angle
     float alpha;		//vertical angle, there is no roll
     
     // result of orientation calculation, 3 relative vectors
-    Point forw;   //from y
-    Point right; //from x
-    Point up; //from z
+    V3 forw;   //from y
+    V3 right; //from x
+    V3 up; //from z
     
     //float w=FOV;//angles of the FOV
     //float h=FOV;
-} Camera;
+};
+typedef struct Camera_ Camera;
 
 Camera camera;
 camera.pos = {0,0,0};
@@ -39,11 +40,11 @@ Point up_const = {0,0,1};
 
 Point rotateAroundAxis(Point p, Point axis, float angle) {
     // Normalize the axis vector
-    axis = normalise(axis);
+    axis.pos = normalise(axis.pos);
     float ux, uy, uz;
-    ux = axis.x;
-    uy = axis.y;
-    uz = axis.z;
+    ux = axis.pos.x;
+    uy = axis.pos.y;
+    uz = axis.pos.z;
 
     // Calculate cosine and sine of the angle
     float cosTheta = cos(angle);
@@ -78,11 +79,11 @@ Point rotateAroundAxis(Point p, Point axis, float angle) {
 void calc_orient(){ //use alpha beta to calculte orientation vectors, matices
 	// horisontal rotation
 	camera.forw = rotateAroundAxis(y_const, up_const, camera.beta);
-	camera.rigth = rotateAroundAxis(x_const, up_const, camera.beta);
+	camera.right = rotateAroundAxis(x_const, up_const, camera.beta);
 	
 	//vertical
-	camera.forw = rotateAroundAxis(camera.forw, camera.rigth, camera.alpha);
-	camera.up = rotateAroundAxis(up_const, camera.rigth, camera.alpha);
+	camera.forw = rotateAroundAxis(camera.forw, camera.right, camera.alpha);
+	camera.up = rotateAroundAxis(up_const, camera.right, camera.alpha);
 }
 
 void move(Direction dir){
@@ -182,12 +183,26 @@ Pixel project_point(const Point& P){
 	result.color = P.color;
 	return result;
 }
-
+void drawLine( Point start_float, Point end_float, COLORREF color){
+	//Pixel start = convertPointToPixel(start_float);
+	//Pixel end = convertPointToPixel(end_float);
+	Pixel start = project_point(start_float);
+	Pixel end = project_point(end_float);
+	
+	dda2(  start, end, color);
+	
+};
+void drawSegment(  Segment s, COLORREF color){ drawLine(  s.start, s.finish, color); };
+void drawSegments(  Segments f, COLORREF color){
+	for (const Segment& segment : f) {
+		drawSegment(  segment, color);
+	};
+}
 
 
 void drawFace(Face face){
 	Contour cont1 = FaceToContour(Face face);
-	Segments f = convertContourToSegments(C);
+	Segments f = convertContourToSegments(cont1 );
 	drawSegments(  f, main_color);
 	
 }
@@ -196,7 +211,7 @@ void drawScene(){
 	//for each triangle call painter
 	InitializeBuffer(); //clean color buffer
 	resetZBuffer(); // clear depth buffer
-	for (const int& face : scene) {
+	for (const Face& face : scene) {
         drawFace(face);
     }
 }
