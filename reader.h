@@ -166,7 +166,7 @@ void readVtkFile(const std::string& filepath, Allpoints& allpoints, Scene& scene
     }
 
     file.close();
-    printf("Vtk read");
+    printf("Vtk is read \n");
 }
 
 

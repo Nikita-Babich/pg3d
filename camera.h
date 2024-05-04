@@ -211,26 +211,33 @@ Pixel project_point(const Point& P){
 	V3 relative = P.pos - camera.pos;
 	
 	float coord1, coord2;
-	
-	if(Pmode){
-		float phi_hor = relative^camera.right;
-		float phi_vert = relative^camera.up;
+	int c1,c2;
+	if(Pmode){ //spherical
+		float phi_hor = relative ^ camera.right;
+		float phi_vert = relative ^ camera.up;
 	
 		//float coord1 = - phi_hor * (180/M_PI) * (DRAW_WIDTH / FOV) + DRAW_WIDTH/2;
 		//float coord2 = - phi_vert * (180/M_PI) * (DRAW_WIDTH / FOV) + DRAW_WIDTH/2;
 		float alpha = (180-FOV)/2;
-		coord1 = (M_PI - phi_hor) * (180/M_PI) - alpha;//  + DRAW_WIDTH/2;
-		coord2 = (phi_vert) * (180/M_PI) - alpha;//  + DRAW_WIDTH/2;
+		coord1 = (M_PI - phi_hor) * (180/M_PI) - alpha ;
+		coord2 = (phi_vert) * (180/M_PI) - alpha ;//  + DRAW_WIDTH/2; //causes freeze
 		
-	} else { //works
-		coord1 = relative*camera.right / len(camera.right);
-		coord2 = relative*camera.up / len(camera.up);
+		//here is the magic + DRAW_WIDTH/2; replace with 400 and it somehow starts working!
+		c1 = static_cast<int>(floor(coord1)) + 400;
+		c2 = static_cast<int>(floor(coord2)) + 400;
+		
+	} else { //flat works
+		coord1 = (relative*camera.right) / len(camera.right);
+		coord2 = (relative*camera.up) / len(camera.up);
 		
 		coord1 *= scaling ;
 		coord2 *= scaling ;
+		
+		c1 = static_cast<int>(coord1) + DRAW_WIDTH/2; //  + DRAW_WIDTH/2;
+		c2 = static_cast<int>(coord2) + DRAW_WIDTH/2;
+
 	}
-	int c1 = static_cast<int>(coord1) + DRAW_WIDTH/2;
-	int c2 = static_cast<int>(coord2) + DRAW_WIDTH/2;
+
 	result.x = c1;
 	result.y = c2;
 	//result.color = P.color; //##
