@@ -166,11 +166,11 @@ V3 normalise(V3 A){
 void calculateFaceNormal(Face& face) {
     //Point u = {face.B->x - face.A->x, face.B->y - face.A->y, face.B->z - face.A->z};
     //Point v = {face.C->x - face.A->x, face.C->y - face.A->y, face.C->z - face.A->z};
-    V3 u = face.B.pos - face.A.pos;
-    V3 v = face.C.pos - face.A.pos;
+    V3 u = face.B->pos - face.A->pos;
+    V3 v = face.C->pos - face.A->pos;
     face.normal = crossProduct(u, v);
     face.normal = normalise(face.normal);
-    if (face.A.pos * face.normal < 0){
+    if (face.A->pos * face.normal < 0){
     	face.normal = -1 * face.normal;
 	}
 }
@@ -221,22 +221,27 @@ Point rpo(){ return (Point){(float)(rand() % DRAW_WIDTH), (float)(rand() % DRAW_
 Point rpo3(){ return (Point){(float)(rand() % 10), (float)(rand() % 10), (float)(rand() % 10)}; } //random Point
 
 //Segment rs(){ return (Segment){ convertPixelToPoint(rpi()), convertPixelToPoint(rpi()) }; }; // random segment
-Segments rss(int size = 10){
-	Segments result;
-	for(size_t i=0; i<size; i++){
-		Segment segment = rs();
-		result.push_back(segment);
-	}
-	return result;
+//Segments rss(int size = 10){
+//	Segments result;
+//	for(size_t i=0; i<size; i++){
+//		Segment segment = rs();
+//		result.push_back(segment);
+//	}
+//	return result;
+//}
+//Contour rcont(int size){
+//	Contour result;
+//	for(size_t i=0; i<size; i++){
+//		Point p = rpo();
+//		result.push_back(p);
+//	}
+//	return result;
+//}
+float dist(Point A, Point B){
+	V3 difference = B.pos-A.pos;
+	return std::sqrt(difference*difference);
 }
-Contour rcont(int size){
-	Contour result;
-	for(size_t i=0; i<size; i++){
-		Point p = rpo();
-		result.push_back(p);
-	}
-	return result;
-}
+
 Contour FaceToContour(Face face){
 	Contour result;
 	result.push_back( *(face.A) );

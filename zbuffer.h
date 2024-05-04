@@ -20,7 +20,7 @@ void resetZBuffer() {
     float maxFloat = std::numeric_limits<float>::max();
     for (int i = 0; i < zbuffer.height; ++i) {
         for (int j = 0; j < zbuffer.width; ++j) {
-            zBuffer.depthBuffer[i][j] = maxFloat;
+            zbuffer.depthBuffer[i][j] = maxFloat;
         }
     }
 }
