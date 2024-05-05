@@ -128,11 +128,9 @@ int WINAPI WinMain(
 	// Segment for setup
 	
 	//first read here
+	
 	read_config();
-	
-	
 	readVtkFile(filepath1, allpoints, scene);
-	
 	
 	InitializeBitmapInfo(&bmi);
 	InitializeBuffer();
@@ -143,6 +141,8 @@ int WINAPI WinMain(
 	
 	UpdateWindow(hwnd);
 	printf("\nWindow is running");
+	
+	
 	
 	
 	MSG msg;
@@ -251,12 +251,15 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 				break;
 				
 			case '1':
+				//read_config();
 				readVtkFile(filepath1, allpoints, scene);
 				break;
 			case '2':
+				//read_config();
 				readVtkFile(filepath2, allpoints, scene);
 				break;
 			case '3':
+				//read_config();
 				readVtkFile(filepath3, allpoints, scene);
 				break;
 			

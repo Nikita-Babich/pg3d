@@ -10,14 +10,15 @@ void read_config(){
         return;
     }
     
-    camera.pos = {0,0,0};
-	camera.beta = 0; // grows towards left
-	camera.alpha = 0; // grows towards up
+    camera.pos = {0,-1.5,0};
+	camera.beta = 0.1; // grows towards left
+	camera.alpha = 0.1; // grows towards up
+	camera.dist = 1.5;
 
     std::string line;
     int lineCount = 0;
     int colorr,colorg,colorb;
-    while (getline(configFile, line)) {
+    while (std::getline(configFile, line)) {
         if (lineCount % 2 == 1) {
         	std::stringstream ss(line);
             switch (lineCount) {
@@ -36,29 +37,31 @@ void read_config(){
                 case 9:
                 	
                     ss >> colorr >> colorg >> colorb;
-                    light.color = RGB(colorr,colorg,colorb);
+                    light.color = RGB(colorb,colorg,colorr);
                     break;
                 case 11:
                     
                     ss >> colorr >> colorg >> colorb;
-                    main_color = RGB(colorr,colorg,colorb);
+                    main_color = RGB(colorb,colorg,colorr);
                     break;
                 case 13:
                     ss >> colorr >> colorg >> colorb;
-                    diffusion = RGB(colorr,colorg,colorb);
+                    diffusion = RGB(colorb,colorg,colorr);
                     break;
                 case 15:
                     ss >> colorr >> colorg >> colorb;
-                    mirror = RGB(colorr,colorg,colorb);
+                    mirror = RGB(colorb,colorg,colorr);
                     break;
                 case 17:
                     ss >> colorr >> colorg >> colorb;
-                    ambience = RGB(colorr,colorg,colorb);
+                    ambience = RGB(colorb,colorg,colorr);
                     break;
             }
         }
+        lineCount++;
     }
-    printf("Config read");   
+    //configFile.close(); //problem line, without it better
+    printf("Config is read\n");   
 }
 
 std::string filepath1 = "files/cube.vtk";
@@ -66,8 +69,14 @@ std::string filepath2 = "files/sphere_octo1.vtk";
 std::string filepath3 = "files/sphere_octo3.vtk";
 
 void readVtkFile(const std::string& filepath, Allpoints& allpoints, Scene& scene) {
-	allpoints.clear();
-	scene.clear();
+	if (!allpoints.empty()) {
+        allpoints.clear();
+    }
+
+    if (!scene.empty()) {
+        scene.clear();
+    }
+    
     std::ifstream file(filepath);
     if (!file) {
         std::cerr << "Error: Unable to open file " << filepath << std::endl;
@@ -144,7 +153,9 @@ void readVtkFile(const std::string& filepath, Allpoints& allpoints, Scene& scene
     						scene.push_back(face);
 
     						// Get the address of the newly added face in the scene vector
-    						Face* addedFace = &scene.back();
+    						//Face* addedFace = &scene.back(); //this useless line prevented from crashing?
+    						
+    						
 							//if(debug)printf("Face added\n");
 							
     						// Update point facePtrs vectors, now points have pointers to the added face

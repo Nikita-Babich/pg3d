@@ -64,7 +64,7 @@ typedef struct {
 typedef std::vector<Segment> Segments;
 typedef std::vector<Point> Contour;
 typedef std::vector<Point> Allpoints;
-typedef std::vector<Contour> Objects;
+//typedef std::vector<Contour> Objects;
 typedef std::vector<Face> Scene;
 
 Segments convertContourToSegments(Contour c){
@@ -160,7 +160,7 @@ V3 normalise(V3 A){
 	if(L>0) {
 		return (V3){A.x/L, A.y/L, A.z/L};
 	} else {
-		return (V3){0, 0, 0};
+		return (V3){0, -1, 0};
 	}
 }
 
