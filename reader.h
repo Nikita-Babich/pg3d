@@ -73,6 +73,7 @@ void read_config(){
 std::string filepath1 = "files/cube.vtk";
 std::string filepath2 = "files/sphere_octo1.vtk";
 std::string filepath3 = "files/sphere_octo3.vtk";
+std::string filepath4 = "files/sphere_octo5.vtk";
 
 void calculate_normals(){
 	for (Point& point : allpoints) {
@@ -137,9 +138,9 @@ COLORREF extract_color(Point point){
 	float Idg = lgreenf*dgf*difcoef;
 	float Idb = lbluef*dbf*difcoef;
 	
-	float Iar = lredf*drf*difcoef;
-	float Iag = lgreenf*dgf*difcoef;
-	float Iab = lbluef*dbf*difcoef;
+	float Iar = lredf*drf;
+	float Iag = lgreenf*dgf;
+	float Iab = lbluef*dbf;
 	
 	float red = Isr + Idr + Iar;
 	float green = Isg + Idg + Iag;

@@ -261,6 +261,10 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 				read_config();
 				readVtkFile(filepath3, allpoints, scene);
 				break;
+			case '4':
+				read_config();
+				readVtkFile(filepath4, allpoints, scene);
+				break;
 			
 			//case 'T': shearMainContour(UP);  break;
 			//case 'G': shearMainContour(DOWN);  break;

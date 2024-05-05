@@ -124,7 +124,7 @@ void generateVTKSphere(const std::string& filename, int n) {
 }
 
 int main() {
-    int n = 3; // Number of times to subdivide each face
+    int n = 5; // Number of times to subdivide each face
     float radius = 3.0; // Radius of the sphere
 
     // Generate the VTK file of a sphere
