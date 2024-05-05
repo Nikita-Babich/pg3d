@@ -245,6 +245,50 @@ Pixel project_point(const Point& P){
 	//result.color = P.color; //##
 	return result;
 }
+
+Point project_point2(const Point& P){
+	calc_orient();
+	//depending on the current mode find coordinates on the drawing plane
+	Point result;
+	V3 relative = P.pos - camera.pos;
+	
+	float coord1, coord2;
+	float c1,c2;
+	if(Pmode){ //spherical
+		float phi_hor = relative ^ camera.right;
+		float phi_vert = relative ^ camera.up;
+	
+		//float coord1 = - phi_hor * (180/M_PI) * (DRAW_WIDTH / FOV) + DRAW_WIDTH/2;
+		//float coord2 = - phi_vert * (180/M_PI) * (DRAW_WIDTH / FOV) + DRAW_WIDTH/2;
+		float alpha = (180-FOV)/2;
+		coord1 = (M_PI - phi_hor) * (180/M_PI) - alpha ;
+		coord2 = (phi_vert) * (180/M_PI) - alpha ;//  + DRAW_WIDTH/2; //causes freeze
+		
+		//here is the magic + DRAW_WIDTH/2; replace with 400 or 200 and it somehow starts working!
+		c1 = floor(coord1);
+		c2 = floor(coord2) + 200;
+		c1 = c1 * 3;
+		c2 = c2 * 3;
+		
+	} else { //flat works
+		coord1 = (relative*camera.right) / len(camera.right);
+		coord2 = (relative*camera.up) / len(camera.up);
+		
+		coord1 *= scaling ;
+		coord2 *= scaling ;
+		
+		c1 = coord1 + DRAW_WIDTH/2; //  + DRAW_WIDTH/2;
+		c2 = coord2 + DRAW_WIDTH/2;
+
+	}
+
+	result.pos.x = c1;
+	result.pos.y = c2;
+	result.color = P.color; //##
+	return result;
+}
+
+
 void drawLine( Point start_float, Point end_float, COLORREF color){
 	//Pixel start = convertPointToPixel(start_float);
 	//Pixel end = convertPointToPixel(end_float);
@@ -268,12 +312,32 @@ void drawSegments(  Segments f, COLORREF color){
 	};
 }
 
+bool looksatme(Face face){
+	V3 A = face.A->pos;
+	V3 B = face.B->pos;
+	V3 C = face.C->pos;
+	V3 av = 1.0/3*(A+B+C);
+	V3 potnorm = crossProduct(B-A,C-B);
+	if(potnorm*av<0) potnorm = -potnorm;
+	if(potnorm*(camera.pos-av) > 0) {
+		return true;
+	} else {
+		return false;
+	}
+	
+	
+}
 
 void drawFace(Face face){
 	Contour cont1 = FaceToContour(face);
 	Segments f = convertContourToSegments(cont1 );
 	if(Dmode){
-		fill_triangle(cont1, cont1);
+		for (Point& point : cont1) {
+			point = project_point2(point);
+		}
+		if(looksatme(face)){
+			fill_triangle(cont1, cont1);
+		}
 	}else{
 		drawSegments(  f, main_color);
 	}

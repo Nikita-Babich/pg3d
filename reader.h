@@ -105,18 +105,27 @@ COLORREF extract_color(Point point){
 	V3 r = calculateReflection(l,n);
 	
 	int lred,lgreen,lblue;
+	
 	ExtractRGBComponents(light.color, &lred, &lgreen, &lblue);
+	float lredf=lred/255.0, lgreenf=lgreen/255.0, lbluef=lblue/255.0;
+	
 	int mr,mg,mb;
 	ExtractRGBComponents(mirror, &mr, &mg, &mb);
+	float mrf=mr/255.0, mgf=mg/255.0, mbf=mb/255.0;
+	
 	int dr,dg,db;
 	ExtractRGBComponents(diffusion, &dr, &dg, &db);
+	float drf=dr/255.0, dgf=dg/255.0, dbf=db/255.0;
+	
 	int ar,ag,ab;
 	ExtractRGBComponents(ambience, &ar, &ag, &ab);
+	float arf=ar/255.0, agf=ag/255.0, abf=ab/255.0;
+	
 	
 	float mircoef = pow(v*r,mirror_sharp);
-	float Isr = lred*mr*mircoef;
-	float Isg = lgreen*mg*mircoef;
-	float Isb = lblue*mb*mircoef;
+	float Isr = lredf*mrf*mircoef;
+	float Isg = lgreenf*mgf*mircoef;
+	float Isb = lbluef*mbf*mircoef;
 	
 	if(v*r < 0 or l*n<0){
 		Isr = 0; Isg = 0; Isb = 0; 
@@ -124,21 +133,21 @@ COLORREF extract_color(Point point){
 	
 	float difcoef = l*n;
 	if (difcoef<0) difcoef = 0;
-	float Idr = lred*dr*difcoef;
-	float Idg = lgreen*dg*difcoef;
-	float Idb = lblue*db*difcoef;
+	float Idr = lredf*drf*difcoef;
+	float Idg = lgreenf*dgf*difcoef;
+	float Idb = lbluef*dbf*difcoef;
 	
-	float Iar = lred*dr*difcoef;
-	float Iag = lgreen*dg*difcoef;
-	float Iab = lblue*db*difcoef;
+	float Iar = lredf*drf*difcoef;
+	float Iag = lgreenf*dgf*difcoef;
+	float Iab = lbluef*dbf*difcoef;
 	
 	float red = Isr + Idr + Iar;
 	float green = Isg + Idg + Iag;
 	float blue = Isb + Idb + Iab;
 	
-	 int redcolor = limitTo0To255(red);
-	  int greencolor = limitTo0To255(green);
-	   int bluecolor = limitTo0To255(blue);
+	 int redcolor = limitTo0To255(red*255);
+	  int greencolor = limitTo0To255(green*255);
+	   int bluecolor = limitTo0To255(blue*255);
 	   
 	return RGB(redcolor, greencolor, bluecolor);
 	

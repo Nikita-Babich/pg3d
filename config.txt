@@ -11,11 +11,11 @@ Light color
 Object color --- COLORS ARE INVERTED, BLUE-GREEN-RED
 0 0 250
 Object diffusion 
-150 150 150
+255 150 150
 Object mirror 
 150 150 150
 Object ambient
-150 150 150
+150 255 150
 Mirror sharpness
 100
 Ambience coef
