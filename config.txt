@@ -5,18 +5,18 @@ Drawing Dmode 0-wireframe,1-colored
 Camera position
 0 -3 1
 Light position
-3 -3 3
+3 3 -3
 Light color
-255 255 255
+50 255 50
 Object color --- COLORS ARE INVERTED, BLUE-GREEN-RED
-0 0 250
+50 50 250
 Object diffusion 
 255 150 150
 Object mirror 
-150 150 150
+150 150 170
 Object ambient
 150 255 150
 Mirror sharpness
-100
+10
 Ambience coef
-0.3
+0.9

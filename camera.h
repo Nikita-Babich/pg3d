@@ -319,7 +319,9 @@ bool looksatme(Face face){
 	V3 av = 1.0/3*(A+B+C);
 	V3 potnorm = crossProduct(B-A,C-B);
 	if(potnorm*av<0) potnorm = -potnorm;
-	if(potnorm*(camera.pos-av) > 0) {
+	if(
+		potnorm*((Pmode) ? camera.pos-av : camera.pos) >= 0
+	) {
 		return true;
 	} else {
 		return false;
@@ -344,15 +346,39 @@ void drawFace(Face face){
 	
 	
 }
-
+void calculate_colors();
 void drawScene(){
 	//for each triangle call painter
 	InitializeBuffer(); //clean color buffer
 	resetZBuffer(); // clear depth buffer
-	calculate_distances();
-	for (const Face& face : scene) {
-        drawFace(face);
-    }
+	calculate_colors();
+	//calculate_distances();
+	
+	Contour cont1;
+	Segments f;
+	if(Dmode){
+		for (const Face& face : scene) {
+        	cont1 = FaceToContour(face);
+			for (Point& point : cont1) {
+				point = project_point2(point);
+			}
+			if(!looksatme(face)){fill_triangle(cont1, cont1);}
+    	};
+    	for (const Face& face : scene) {
+        	cont1 = FaceToContour(face);
+			for (Point& point : cont1) {
+				point = project_point2(point);
+			}
+			if(looksatme(face)){fill_triangle(cont1, cont1);}
+    	}
+	}else{
+		for (const Face& face : scene) {
+        	Contour cont1 = FaceToContour(face);
+			Segments f = convertContourToSegments(cont1 );
+			drawSegments(  f, main_color);
+    	}
+	}
+	
 }
 
 #endif // CAMERA_INCLUDED

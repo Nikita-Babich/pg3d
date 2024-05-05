@@ -250,15 +250,15 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			case 'V': triangle_method = !triangle_method; printf(" Goraud : %s\n", triangle_method ? "true" : "false"); break;
 				
 			case '1':
-				//read_config();
+				read_config();
 				readVtkFile(filepath1, allpoints, scene);
 				break;
 			case '2':
-				//read_config();
+				read_config();
 				readVtkFile(filepath2, allpoints, scene);
 				break;
 			case '3':
-				//read_config();
+				read_config();
 				readVtkFile(filepath3, allpoints, scene);
 				break;
 			
