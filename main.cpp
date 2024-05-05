@@ -247,8 +247,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			case 'Z': Pmode = !Pmode;  break;
 			case 'X': Dmode = !Dmode;  break;
 			case 'C': break;
-			case 'V': triangle_method = !triangle_method;
-				break;
+			case 'V': triangle_method = !triangle_method; break;
 				
 			case '1':
 				//read_config();

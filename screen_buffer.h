@@ -120,9 +120,9 @@ COLORREF colorchooser(float x, float y, Contour C){
 		float d0 = dist(P,C[0]);
 		float d1 = dist(P,C[1]);
 		float d2 = dist(P,C[2]);
-		if (d0<d1 && d0 < d2) return RED;
-		if (d1<d0 && d1 < d2) return GREEN;
-		if (d2<d0 && d2 < d1) return BLUE;
+		if (d0<d1 && d0 < d2) return C[0].color;
+		if (d1<d0 && d1 < d2) return C[1].color;
+		if (d2<d0 && d2 < d1) return C[2].color;
 	};
 	return RED;
 }

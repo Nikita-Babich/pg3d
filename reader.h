@@ -68,6 +68,13 @@ std::string filepath1 = "files/cube.vtk";
 std::string filepath2 = "files/sphere_octo1.vtk";
 std::string filepath3 = "files/sphere_octo3.vtk";
 
+void calculate_normals(){
+	for (Point& point : allpoints) {
+		point.normal = normalise(point.pos);
+	};
+	printf("normals calculated");
+}
+
 void readVtkFile(const std::string& filepath, Allpoints& allpoints, Scene& scene) {
 	if (!allpoints.empty()) {
         allpoints.clear();
@@ -178,7 +185,9 @@ void readVtkFile(const std::string& filepath, Allpoints& allpoints, Scene& scene
 
     file.close();
     printf("Vtk is read \n");
+    calculate_normals();
 }
+
 
 
 
