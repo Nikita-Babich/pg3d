@@ -56,6 +56,12 @@ void read_config(){
                     ss >> colorr >> colorg >> colorb;
                     ambience = RGB(colorb,colorg,colorr);
                     break;
+                case 19:
+                    ss >> mirror_sharp;
+                    break;
+                case 21:
+                    ss >> amb_coef;
+                    break;
             }
         }
         lineCount++;
@@ -73,6 +79,74 @@ void calculate_normals(){
 		point.normal = normalise(point.pos);
 	};
 	printf("normals calculated");
+}
+V3 calculateReflection(const V3& light, const V3& normal) {
+	//light defines path towards light
+    float dotProduct = (-light)*normal;
+    V3 reflection = (-light) - ((2 * dotProduct) * normal);
+    return reflection;
+}
+int limitTo0To255(float value) {
+    if (value < 0.0f) {
+        return 0;
+    } else if (value > 255.0f) {
+        return 255;
+    } else {
+        // Convert the value to an int
+        return static_cast<int>(value);
+    }
+}
+COLORREF extract_color(Point point){
+	
+	V3 v = normalise(camera.pos - point.pos);
+	V3 n = point.normal;
+	V3 l = normalise(light.pos - point.pos);
+	V3 r = calculateReflection(l,n);
+	
+	int lred,lgreen,lblue;
+	ExtractRGBComponents(light.color, &lred, &lgreen, &lblue);
+	int mr,mg,mb;
+	ExtractRGBComponents(mirror, &mr, &mg, &mb);
+	int dr,dg,db;
+	ExtractRGBComponents(diffusion, &dr, &dg, &db);
+	int ar,ag,ab;
+	ExtractRGBComponents(ambience, &ar, &ag, &ab);
+	
+	float mircoef = pow(v*r,mirror_sharp);
+	float Isr = lred*mr*mircoef;
+	float Isg = lgreen*mg*mircoef;
+	float Isb = lblue*mb*mircoef;
+	
+	if(v*r < 0 or l*n<0){
+		Isr = 0; Isg = 0; Isb = 0; 
+	}
+	
+	float difcoef = l*n;
+	if (difcoef<0) difcoef = 0;
+	float Idr = lred*dr*difcoef;
+	float Idg = lgreen*dg*difcoef;
+	float Idb = lblue*db*difcoef;
+	
+	float Iar = lred*dr*difcoef;
+	float Iag = lgreen*dg*difcoef;
+	float Iab = lblue*db*difcoef;
+	
+	float red = Isr + Idr + Iar;
+	float green = Isg + Idg + Iag;
+	float blue = Isb + Idb + Iab;
+	
+	 int redcolor = limitTo0To255(red);
+	  int greencolor = limitTo0To255(green);
+	   int bluecolor = limitTo0To255(blue);
+	   
+	return RGB(redcolor, greencolor, bluecolor);
+	
+}
+void calculate_colors(){
+	for (Point& point : allpoints) {
+		point.color = extract_color(point);
+	};
+	printf("colors calculated");
 }
 
 void readVtkFile(const std::string& filepath, Allpoints& allpoints, Scene& scene) {
@@ -186,6 +260,7 @@ void readVtkFile(const std::string& filepath, Allpoints& allpoints, Scene& scene
     file.close();
     printf("Vtk is read \n");
     calculate_normals();
+    calculate_colors();
 }
 
 

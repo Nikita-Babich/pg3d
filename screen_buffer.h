@@ -103,9 +103,9 @@ COLORREF colorchooser(float x, float y, Contour C){
 		);
 		float L2 = 1 - L0 - L1;
 		int R1, G1, B1, R2, G2, B2, R3, G3, B3;
-    	ExtractRGBComponents(RED, &R1, &G1, &B1);
-    	ExtractRGBComponents(GREEN, &R2, &G2, &B2);
-    	ExtractRGBComponents(BLUE, &R3, &G3, &B3);
+    	ExtractRGBComponents(C[0].color, &R1, &G1, &B1);
+    	ExtractRGBComponents(C[1].color, &R2, &G2, &B2);
+    	ExtractRGBComponents(C[2].color, &R3, &G3, &B3);
 		
 		int R = (int)(L0 * R1 + L1 * R2 + L2 * R3);
     	int G = (int)(L0 * G1 + L1 * G2 + L2 * G3);

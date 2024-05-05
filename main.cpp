@@ -244,10 +244,10 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 				//camera.pos = camera.dist * camera.pos;
 				 break;
 			
-			case 'Z': Pmode = !Pmode;  break;
-			case 'X': Dmode = !Dmode;  break;
+			case 'Z': Pmode = !Pmode; printf(" Spherical : %s\n", Pmode ? "true" : "false"); break;
+			case 'X': Dmode = !Dmode; printf(" Wireframe : %s\n", Dmode ? "false" : "true"); break;
 			case 'C': break;
-			case 'V': triangle_method = !triangle_method; break;
+			case 'V': triangle_method = !triangle_method; printf(" Goraud : %s\n", triangle_method ? "true" : "false"); break;
 				
 			case '1':
 				//read_config();

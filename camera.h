@@ -265,7 +265,7 @@ void drawSegments(  Segments f, COLORREF color){
 void drawFace(Face face){
 	Contour cont1 = FaceToContour(face);
 	Segments f = convertContourToSegments(cont1 );
-	if(DMODE){
+	if(Dmode){
 		fill_triangle(cont1, cont1);
 	}else{
 		drawSegments(  f, main_color);

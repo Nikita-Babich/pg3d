@@ -8,7 +8,7 @@ Light position
 3 -3 3
 Light color
 255 255 255
-Object color ---
+Object color --- COLORS ARE INVERTED, BLUE-GREEN-RED
 0 0 250
 Object diffusion 
 150 150 150
@@ -16,4 +16,7 @@ Object mirror
 150 150 150
 Object ambient
 150 150 150
-
+Mirror sharpness
+100
+Ambience coef
+0.3

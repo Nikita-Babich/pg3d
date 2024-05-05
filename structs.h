@@ -92,6 +92,8 @@ Segments convertContourToSegments(Contour c){
 Scene scene;
 Allpoints allpoints;
 Point light;
+float mirror_sharp = 2;
+float amb_coef = 0.5;
 bool Pmode = false; //plane vs spherical projection
 bool Dmode = false; //wireframe vs coloring
 
