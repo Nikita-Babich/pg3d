@@ -138,9 +138,9 @@ COLORREF extract_color(Point point){
 	float Idg = lgreenf*dgf*difcoef;
 	float Idb = lbluef*dbf*difcoef;
 	
-	float Iar = lredf*drf;
-	float Iag = lgreenf*dgf;
-	float Iab = lbluef*dbf;
+	float Iar = arf*drf;
+	float Iag = agf*dgf;
+	float Iab = abf*dbf;
 	
 	float red = Isr + Idr + Iar;
 	float green = Isg + Idg + Iag;

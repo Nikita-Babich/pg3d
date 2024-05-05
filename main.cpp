@@ -136,10 +136,10 @@ int WINAPI WinMain(
 	InitializeBuffer();
 	
 	ShowWindow(hwnd, nCmdShow);
-	srand(time(NULL));
+	//srand(time(NULL));
 	//main_contour = rcont(6);
 	
-	UpdateWindow(hwnd);
+	//UpdateWindow(hwnd);
 	printf("\nWindow is running");
 	
 	
@@ -250,19 +250,19 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			case 'V': triangle_method = !triangle_method; printf(" Goraud : %s\n", triangle_method ? "true" : "false"); break;
 				
 			case '1':
-				read_config();
+				//read_config();
 				readVtkFile(filepath1, allpoints, scene);
 				break;
 			case '2':
-				read_config();
+				//read_config();
 				readVtkFile(filepath2, allpoints, scene);
 				break;
 			case '3':
-				read_config();
+				//read_config();
 				readVtkFile(filepath3, allpoints, scene);
 				break;
 			case '4':
-				read_config();
+				//read_config();
 				readVtkFile(filepath4, allpoints, scene);
 				break;
 			

@@ -223,8 +223,8 @@ Pixel project_point(const Point& P){
 		coord2 = (phi_vert) * (180/M_PI) - alpha ;//  + DRAW_WIDTH/2; //causes freeze
 		
 		//here is the magic + DRAW_WIDTH/2; replace with 400 or 200 and it somehow starts working!
-		c1 = static_cast<int>(floor(coord1));
-		c2 = static_cast<int>(floor(coord2)) + 200;
+		c1 = static_cast<int>(coord1);
+		c2 = static_cast<int>(coord2) + 200;
 		c1 = c1 * 3;
 		c2 = c2 * 3;
 		
