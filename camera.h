@@ -254,6 +254,13 @@ void drawLine( Point start_float, Point end_float, COLORREF color){
 	dda2(  start, end, color);
 	
 };
+void calculate_distances(){
+	for (Point& point : allpoints) {
+		//point.dist = len(point.pos - camera.pos);
+	};
+	//printf("dists calculated\n");
+}
+
 void drawSegment(  Segment s, COLORREF color){ drawLine(  s.start, s.finish, color); };
 void drawSegments(  Segments f, COLORREF color){
 	for (const Segment& segment : f) {
@@ -278,6 +285,7 @@ void drawScene(){
 	//for each triangle call painter
 	InitializeBuffer(); //clean color buffer
 	resetZBuffer(); // clear depth buffer
+	calculate_distances();
 	for (const Face& face : scene) {
         drawFace(face);
     }

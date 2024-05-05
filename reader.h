@@ -80,6 +80,7 @@ void calculate_normals(){
 	};
 	printf("normals calculated");
 }
+
 V3 calculateReflection(const V3& light, const V3& normal) {
 	//light defines path towards light
     float dotProduct = (-light)*normal;
