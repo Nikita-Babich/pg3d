@@ -267,15 +267,15 @@ Point project_point2(const Point& P){
 		//here is the magic + DRAW_WIDTH/2; replace with 400 or 200 and it somehow starts working!
 		c1 = floor(coord1);
 		c2 = floor(coord2) + 200;
-		c1 = c1 * 3;
-		c2 = c2 * 3;
+		c1 = c1 * 5;
+		c2 = c2 * 5;
 		
 	} else { //flat works
 		coord1 = (relative*camera.right) / len(camera.right);
 		coord2 = (relative*camera.up) / len(camera.up);
 		
-		coord1 *= scaling ;
-		coord2 *= scaling ;
+		coord1 *= scaling *2;
+		coord2 *= scaling *2;
 		
 		c1 = coord1 + DRAW_WIDTH/2; //  + DRAW_WIDTH/2;
 		c2 = coord2 + DRAW_WIDTH/2;

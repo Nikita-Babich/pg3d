@@ -1,18 +1,36 @@
 # Description pg3d
  3d triangle-projection grahics made in C/C++ with WinAPI
  
-## Structure
-There is World, which has a vector of Object, each of which is a set of triangles with additional info (like colors).
-
-There is Camera which tracks position and orientation of the viewer. Holds parameters like type of projection.
-
-"Render" takes Camera and World and loops through objects and their triangles. If normal does not look at the viewer - skip.
-
-Reader takes vtk, builds object and adds it to the world.
- 
 ## Controls
-(My keyboard is broken, so mapping might look weird)
+
+esc - read config and reset
+z - flip between projection modes
+x - flip between wireframe and surface
+v - flip between colorblending methods
+
+Up Left Right Down arrows - move camera around the body center
+i - move closer (does not redraw on itself, use for example i and then Left)
+k - move further (same)
+
+1 - load cube
+2 - load sphere 1
+3 - load sphere 3
+4 - load sphere 5
+
+## Notes
+zbuffer was not used
+Absolute movement was partially implemented, but not linked to lighting ,thus looks wrong (QWERASDF - for movement)
 
 
-## Todo
-- Camera
+## building
+
+- C++ Compiler: C:\Program Files (x86)\Embarcadero\Dev-Cpp\TDM-GCC-64\bin\g++.exe
+- Command: g++.exe "C:\Users\NIK\Documents\_STU\_sem4\pg3d\main.cpp" -o "C:\Users\NIK\Documents\_STU\_sem4\pg3d\main.exe" -g3 -I"C:\Program Files (x86)\Embarcadero\Dev-Cpp\TDM-GCC-64\include" -I"C:\Program Files (x86)\Embarcadero\Dev-Cpp\TDM-GCC-64\x86_64-w64-mingw32\include" -I"C:\Program Files (x86)\Embarcadero\Dev-Cpp\TDM-GCC-64\lib\gcc\x86_64-w64-mingw32\9.2.0\include" -I"C:\Program Files (x86)\Embarcadero\Dev-Cpp\TDM-GCC-64\lib\gcc\x86_64-w64-mingw32\9.2.0\include\c++" -L"C:\Program Files (x86)\Embarcadero\Dev-Cpp\TDM-GCC-64\lib" -L"C:\Program Files (x86)\Embarcadero\Dev-Cpp\TDM-GCC-64\x86_64-w64-mingw32\lib" -static-libgcc -lgdi32 -lcomdlg32 -g3
+
+Compilation results...
+
+- Errors: 0
+- Warnings: 0
+- Output Filename: C:\Users\NIK\Documents\_STU\_sem4\pg3d\main.exe
+- Output Size: 5,04834747314453 MiB
+- Compilation Time: 3,36s
